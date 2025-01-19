@@ -1,0 +1,30 @@
+
+
+.contents {
+    padding-top: 70px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
+.contents-div {
+    width: calc(100% - 100px);
+}
+
+.contents-title {
+    color: #292a32;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 26px;
+    position: relative;
+}
+
+.contents-box {
+    color: #292a32;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 26px;
+    position: relative;
+}
