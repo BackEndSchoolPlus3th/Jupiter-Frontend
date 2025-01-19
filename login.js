@@ -19,3 +19,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// 복구 테스트
