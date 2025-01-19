@@ -292,3 +292,10 @@ a {
     margin-left: auto;
     display: flex;
 }
+
+.like-container .logout {
+    color: #9e9fa1;
+    justify-content: center;
+}
+
+/* mypage-taste */
