@@ -1,10 +1,29 @@
 <!DOCTYPE html>
+<link rel="stylesheet" href="login.css">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    pr 확인
+    <div class="login-page">
+        <div class="login-box">
+            <div class="logo">우주라이크</div>
+            <h1>로그인</h1>
+            <form id="login-form">
+                <input type="email" id="email" name="email" placeholder="이메일" required>
+                <div id="error-message-email" class="error-message"></div>
+                <input type="password" id="password" name="password" placeholder="비밀번호" required>
+                <div id="error-message-password" class="error-message"></div>
+                <button type="submit">로그인</button>
+            </form>
+        </div>
+    </div>
+    <div class="background">
+        <div class="overlay"></div>
+    </div>
 </body>
+<script src="login.js"></script>
 </html>
