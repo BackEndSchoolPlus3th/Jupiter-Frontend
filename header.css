@@ -89,7 +89,7 @@ li {
     border-radius: 2px;
     align-items: center;
     height: 38px;
-    padding: 7px 10px 8px 36px;
+    padding: 7px 12px 8px 20px;
     display: flex;
     position: relative;
 }
@@ -128,4 +128,8 @@ span {
 a {
     color: black;
     text-decoration-line: none;
+}
+
+.search-icon {
+    margin-right: 10px;
 }
