@@ -33,13 +33,13 @@ nav {
     unicode-bidi: isolate;
 }
 
-.nav_list {
+.nav-list {
     align-items: center;
     display: flex;
     padding: 0 20px;
 }
 
-.nav_li {
+.nav-li {
     height: 62px;
     flex-shrink: 0;
     align-items: center;
@@ -74,17 +74,17 @@ li {
 }
 
 
-.search.search_div {
+.search.search-div {
     flex-shrink: 1;
     margin: 0 0 0 auto;
     transition: all .5s;
 }
-.search_box {
+.search-box {
     width: 300px;
     position: relative;
     padding: 0 10px;
 }
-.search_label {
+.search-label {
     background-color: #eeeeee;
     border-radius: 2px;
     align-items: center;
@@ -94,7 +94,7 @@ li {
     position: relative;
 }
 
-.search_input {
+.search-input {
     -webkit-appearance: none;
     appearance: none;
     caret-color: #353535;
