@@ -1,0 +1,131 @@
+@font-face {
+    font-family: 'EF_jejudoldam';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+
+html, body {
+    color: black;
+    background: white;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: Pretendard, Apple SD Gothic Neo, Nanum Gothic, Malgun Gothic, sans-serif;
+}
+
+header {
+    background-color: var(--color-background);
+    box-shadow: 0 1px #00000014;
+}
+
+.header {
+    width: 100%;
+    background-color: #fff;
+}
+
+nav {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+.nav_list {
+    align-items: center;
+    display: flex;
+    padding: 0 20px;
+}
+
+.nav_li {
+    height: 62px;
+    flex-shrink: 0;
+    align-items: center;
+    margin: 0 0 0 10px;
+    display: flex;
+    position: relative;
+}
+
+ol, ul {
+    margin: 0;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    list-style-type: none;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    unicode-bidi: isolate;
+}
+
+li {
+    height: 62px
+    flex-shrink: 0;
+    align-items: center;
+    margin: 0 0 0 10px;
+    display: flex;
+    position: relative;
+}
+
+
+.search.search_div {
+    flex-shrink: 1;
+    margin: 0 0 0 auto;
+    transition: all .5s;
+}
+.search_box {
+    width: 300px;
+    position: relative;
+    padding: 0 10px;
+}
+.search_label {
+    background-color: #eeeeee;
+    border-radius: 2px;
+    align-items: center;
+    height: 38px;
+    padding: 7px 10px 8px 36px;
+    display: flex;
+    position: relative;
+}
+
+.search_input {
+    -webkit-appearance: none;
+    appearance: none;
+    caret-color: #353535;
+    background: 0 0;
+    border: 0;
+    outline: none;
+    width: 100%;
+    padding: 0 0 1px;
+    overflow: hidden;
+}
+
+form {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+.logo{
+    font-family: 'EF_jejudoldam';
+    font-size: 36px;
+    padding: 10px 20px;
+    color:#1c1c1c;
+}
+
+span {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 20px;
+}
+
+a {
+    color: black;
+    text-decoration-line: none;
+}
