@@ -36,8 +36,8 @@ a {
     left: 0;
     width: 100%;
     /* 화면 전체를 차지하도록 설정 */
-    height: 100%;  
-    display: flex;
+    /* height: 100%;   */
+    /* display: flex; */
     flex-direction: column;
 }
 
@@ -225,7 +225,7 @@ a {
     padding: 7px 15px 24px;
 }
 
-.user-taste-rate>span{
+.rate-tag{
     box-sizing: border-box;
     color: #f7175a;
     background-color: #ffdbe1;
@@ -236,6 +236,7 @@ a {
     font-size: 12px;
     font-weight: 500;
     line-height: 16px;
+    margin-left: 19px;
 }
 
 .graph-container {
@@ -273,7 +274,7 @@ a {
     font-weight: 500;
 }
 
-.like-container>a>div {
+.like-comment {
     color: #292a32;
     letter-spacing: -.2px;
     align-items: center;
@@ -285,7 +286,7 @@ a {
     display: flex;
 }
 
-.like-container .like {
+.like {
     box-sizing: border-box;
     color: #292a32;
     letter-spacing: -.2px;
@@ -296,7 +297,7 @@ a {
     width: max-content;
 }
 
-.like-container .like-list {
+.like-list {
     justify-content: flex-end;
     align-items: center;
     width: 20px;
@@ -306,6 +307,14 @@ a {
 }
 
 .like-container .logout {
+    letter-spacing: -.2px;
+    align-items: center;
+    height: 42px;
+    padding: 0 15px;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 25px;
+    display: flex;
     color: #9e9fa1;
     justify-content: center;
 }
