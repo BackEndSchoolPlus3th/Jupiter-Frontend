@@ -20,8 +20,16 @@
 
 } */
  html, body{
+	
 	width: 100%;
 	overflow-x:hidden;
+	
+ }
+ header > .nav{
+	width: 100%;
+ }
+ .nav{
+	 width:100%;
  }
  .wrap{
 	margin: auto;
@@ -29,6 +37,10 @@
 h1{
 	font-size:48;
 	font-weight:100;
+}
+.main_text0{
+	padding-top:200px;
+	height: 200px;
 }
 .contents1{
 	font-size:20px;
@@ -74,9 +86,10 @@ h1{
 }
 .nav{
 	display:flex;
-	justify-content: flex-end;
+	width:100%;
+	/* justify-content: flex-end; */
+
 	line-height:86px;
-	width:calc(1280px - 300px);
 }
 .nav > li{
 	margin-left:84px;
@@ -130,15 +143,15 @@ h1{
 	color:black;
 }
 .main_text0{
-	height:501px;
-	margin-top:-132px;/*margin은 실제 그 위치에 있는거임 
+	margin-top:-132px;
+	/*margin은 실제 그 위치에 있는거임 
 	position은 보이는 위치가 위에 있다고 해서 거기에 실제로 있는 것이 아님.  */
-	margin-bottom: 10px;
+	padding-bottom: 250px;
 	background:#f1f2f3;
 	border-bottom:solid 1px gray;
 	
 }
-.main_text0 >h1{
+.main_text0 > h1{
 	margin-top:116px;
 	text-align:center;
 }
