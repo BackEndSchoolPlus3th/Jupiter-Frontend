@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="mypage.css">
+    <meta charset="UTF-8">
+    <title>취향 분석</title>
+</head>
+<body>
+    <section class="mypage-section">
+        <div class="mypage-background">
+            <div class="mypage">
+                <div class="mypage-container" style="margin-bottom: 10px;">
+                    <div class="section-all">
+                        <div class="user-taste-rate">
+                            <div class="graph-container">
+                                <div class="graph"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mypage-container">
+                    <div class="section-all">
+                        <div class="user-content-title">취향분석</div>
+                        <div>
+                            <div class="user-taste-rate">
+                                <div class="graph-container">
+                                    <div class="graph"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="position: relative;">
+                            <div>
+                                <div style="padding: 4px;"></div>
+                                <!-- <button class="setting-button"></button> -->
+                            </div>
+                            <div class="user-profile-div">
+                                <div class="user-content rating">
+                                    <a class="">
+                                        <span class="count" id="movie-cnt" name="movie-cnt">0</span>
+                                        <span class="count-title">별점 평균</span>
+                                    </a>
+                                    <div class="line"></div>
+                                    <a class="">
+                                        <span class="count" id="movie-cnt" name="movie-cnt">0</span>
+                                        <span class="count-title">별점 개수</span>
+                                    </a>
+                                    <div class="line"></div>
+                                    <a>
+                                        <span class="count" id="comment-cnt" name="comment-cnt">0</span>
+                                        <span class="count-title">많이 준 별점</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mypage-container">
+                    <div class="section-all">
+                        <section>
+                            <div >
+                                <div class="user-content-title">영화 선호태그</div>
+                                <div class="tags-container">
+                                    <div class="tags"></div>
+                                    <hr class="section-devide">
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <div>
+                                <div class="user-content-title">영화 선호국가</div>
+                                <div class="top-3-container">
+                                    <div class="user-content rating">
+                                        <a class="">
+                                            <span class="count" id="movie-cnt" name="movie-cnt">미국</span>
+                                            <span class="count-title">
+                                                <span>92</span>점
+                                                • 
+                                                <span>6</span>편
+                                            </span>
+                                        </a>
+                                        <div class="line"></div>
+                                        <a class="">
+                                            <span class="count" id="movie-cnt" name="movie-cnt">영국</span>
+                                            <span class="count-title">
+                                                <span>90</span>점
+                                                • 
+                                                <span>3</span>편
+                                            </span>
+                                        </a>
+                                        <div class="line"></div>
+                                        <a>
+                                            <span class="count" id="comment-cnt" name="comment-cnt">한국</span>
+                                            <span class="count-title">
+                                                <span>84</span>점
+                                                • 
+                                                <span>1</span>편
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <ul class="prefer-list">
+                                    <li class="prefer-list-item">
+                                        캐나다
+                                        <span>
+                                            78점
+                                            • 
+                                            1편
+                                        </span>
+                                    </li>
+                                </ul>
+                                <hr class="section-devide">
+                            </div>
+                        </section>
+                        <section>
+                            <div>
+                                <div class="user-content-title">영화 선호장르</div>
+                                <div class="top-3-container">
+                                    <div class="user-content rating">
+                                        <a class="">
+                                            <span class="count" id="movie-cnt" name="movie-cnt">모험</span>
+                                            <span class="count-title">
+                                                <span>92</span>점
+                                                • 
+                                                <span>6</span>편
+                                            </span>
+                                        </a>
+                                        <div class="line"></div>
+                                        <a class="">
+                                            <span class="count" id="movie-cnt" name="movie-cnt">액션</span>
+                                            <span class="count-title">
+                                                <span>90</span>점
+                                                • 
+                                                <span>3</span>편
+                                            </span>
+                                        </a>
+                                        <div class="line"></div>
+                                        <a>
+                                            <span class="count" id="comment-cnt" name="comment-cnt">코미디</span>
+                                            <span class="count-title">
+                                                <span>84</span>점
+                                                • 
+                                                <span>1</span>편
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <ul class="prefer-list">
+                                    <li class="prefer-list-item">
+                                        애니메이션
+                                        <span>
+                                            80점
+                                            • 
+                                            1편
+                                        </span>
+                                    </li>
+                                    <li class="prefer-list-item">
+                                        드라마
+                                        <span>
+                                            78점
+                                            • 
+                                            1편
+                                        </span>
+                                    </li>
+                                    <li class="prefer-list-item">
+                                        SF
+                                        <span>
+                                            72점
+                                            • 
+                                            1편
+                                        </span>
+                                    </li>
+                                </ul>
+                                <div style="padding-bottom: 24px;">
+                                    <button type="button" class="more">
+                                        <span role="textbox">더보기</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" aria-hidden="true" ><path fill="currentColor" d="M2.613 7.113a.763.763 0 0 1 1.095 0l8.457 8.651a.8.8 0 0 1 0 1.118.763.763 0 0 1-1.094 0L2.613 8.23a.8.8 0 0 1 0-1.118Z"></path><path fill="currentColor" d="M20.618 7.118a.8.8 0 0 1 0 1.118l-8.452 8.646a.763.763 0 0 1-1.095 0 .8.8 0 0 1 0-1.118l8.452-8.646a.763.763 0 0 1 1.095 0"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
