@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="./footer/footer.css">
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+</head>
+
+<body>
+  <!-- Footer 불러오는 부분 -->
+  <div id="footer-container"></div>
+
+  <script>
+    // footer.html 불러오기
+    fetch('./footer/footer.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('footer-container').innerHTML = data;
+
+        // footer.js를 footer.html 로드 후 동적으로 추가
+        const script = document.createElement('script');
+        script.src = './footer/footer.js';
+
+        // script 로드 완료 후 footer.js 실행
+        script.onload = () => {
+          console.log('footer.js loaded successfully!');
+        };
+        
+        // script 로드 실패 시 오류 처리
+        script.onerror = () => {
+          console.error('Failed to load footer.js');
+        };
+
+        // script 태그를 body에 추가하여 footer.js 로드
+        document.body.appendChild(script);
+      })
+      .catch(error => console.error('Error loading footer:', error));
+  </script>
+</body>
+
+</html>
