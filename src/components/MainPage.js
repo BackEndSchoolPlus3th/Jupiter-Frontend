@@ -12,11 +12,11 @@ function MainPage() {
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-                const boxOfficeResponse = await axios.get('http://localhost:8080/api/movies/popular');
-                setBoxOfficeMovies(boxOfficeResponse.data);
+                const popularMovies = await axios.get('http://localhost:8090/api/movies/popular');
+                setBoxOfficeMovies(popularMovies.data);
 
-                const recommendedResponse = await axios.get('http://localhost:8080/api/movies/top-rated');
-                setRecommendedMovies(recommendedResponse.data);
+                const topRatedMovies = await axios.get('http://localhost:8090/api/movies/top-rated');
+                setRecommendedMovies(topRatedMovies.data);
             } catch (error) {
                 console.error('영화 데이터를 불러오는 데 실패했습니다.', error);
             }
@@ -33,7 +33,7 @@ function MainPage() {
                     <p className="contents-title">PopularMovies</p>
                     <div className="contents-box">
                         <ul className="contents-ul">
-                            {boxOfficeMovies.map((movie) => (
+                            {popularMovies.map((movie) => (
                                 <li key={movie.id}>
                                     <img
                                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -52,7 +52,7 @@ function MainPage() {
                     <p className="contents-title">TopRatedMovies</p>
                     <div className="contents-box">
                         <ul className="contents-ul">
-                            {recommendedMovies.map((movie) => (
+                            {topRatedMovies.map((movie) => (
                                 <li key={movie.id}>
                                     <img
                                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
