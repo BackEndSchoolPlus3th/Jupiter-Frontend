@@ -1,22 +1,14 @@
   /* footer 스타일 */
-footer {
-    background-color: #111;
+  footer {
+    background-color: white;
     text-align: center; /* 모든 내용을 중앙 정렬 */
-    color: white;
+    color: #111;
     font-size: 14px;
     position: relative;
     display: flex;  /* Flexbox 활성화 */
     justify-content: center;  /* 가로 중앙 정렬 */
     align-items: center;  /* 세로 중앙 정렬 */
     gap: 30px;  /* 요소들 간의 간격을 설정 */
-  }
-  
-  /* footer-text-team에 대한 스타일 */
-  .footer-text-team img {
-    width: 100px;  /* 이미지 너비 조정 (원하는 크기로 수정) */
-    height: auto;  /* 비율에 맞게 높이 자동 조정 */
-    object-fit: contain;  /* 이미지 비율 유지하면서 크기 맞추기 */
-    margin-right: 20px;  /* 이미지와 텍스트 사이에 여백 추가 */
   }
   
   /* footer-text-member 스타일 */
@@ -57,26 +49,24 @@ footer {
   
  /* 챗봇 창 */
 .chatbot-window {
-  display: none;
-    position: absolute;
-    bottom: 70px; /* 버튼 위에 위치 */
-    right: 0;
-    width: 300px;
-    height: 400px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    visibility: hidden; /* 기본적으로 숨겨짐 */
-    opacity: 0; /* 기본적으로 투명 */
-    transition: visibility 0s, opacity 0.3s linear; /* 애니메이션 추가 */
-    flex-direction: column;
-    overflow: hidden;
+  display: none; /* 기본적으로 숨겨짐 */
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  width: 300px;
+  height: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s linear; /* opacity를 이용해 애니메이션 */
+  flex-direction: column;
+  overflow: hidden;
+    
   }
   
   /* open 클래스를 추가하면 챗봇 창을 표시 */
 .chatbot-window.open {
   display: block;
-    visibility: visible; /* 보이게 하기 */
     opacity: 1; /* 불투명하게 하기 */
   }
   
