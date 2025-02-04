@@ -58,7 +58,7 @@ function Chatbot() {
     }, [isChatbotOpen, messages]);  // 챗봇 열릴 때와 메시지 추가될 때마다 실행
 
     useEffect(() => {
-        const socket = new SockJS('http://localhost:8080/chat');
+        const socket = new SockJS('http://localhost:8090/chat');
         stompClientRef.current = new Client({
             webSocketFactory: () => socket,
             onConnect: () => {
@@ -97,7 +97,7 @@ function Chatbot() {
 
     const fetchPreviousMessages = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/chat/previousMessages', {
+            const response = await axios.get('http://localhost:8090/api/chat/previousMessages', {
                 params: { userId },
             });
 

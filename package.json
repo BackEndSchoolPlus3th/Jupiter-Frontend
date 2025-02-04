@@ -8,6 +8,7 @@
     "cra-template": "1.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-loading-skeleton": "^3.5.0",
     "react-scripts": "5.0.1",
     "sockjs-client": "^1.6.1",
     "web-vitals": "^4.2.4"
@@ -36,5 +37,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:8090"
 }
