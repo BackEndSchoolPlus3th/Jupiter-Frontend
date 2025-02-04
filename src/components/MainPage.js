@@ -4,6 +4,7 @@ import '../styles/MainPage.css';
 
 import Header from './Header';
 import Footer from './Footer';
+import Banner from './Banner';
 
 function MainPage() {
     const [popularMovies, setBoxOfficeMovies] = useState([]);
@@ -65,6 +66,7 @@ function MainPage() {
     return (
         <div className="contents">
             <Header />
+            <div className="banner"></div>
             <div className="contents-div">
                 {/* 인기 영화 섹션 */}
                 <div className="box-office">

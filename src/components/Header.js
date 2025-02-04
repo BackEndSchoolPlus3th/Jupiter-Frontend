@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import '../styles/Header.css';
+import LoginPage from './Login';
 
 function Header() {
     const [inputValue, setInputValue] = useState(''); // 상태 선언
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
 
     // 입력값 변경 처리 함수
     const handleChange = (e) => {
         setInputValue(e.target.value); // 상태 업데이트
+    };
+
+    // 로그인 모달 열기
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    // 로그인 모달 닫기
+    const closeModal = () => {
+        setIsModalOpen(false);
     };
 
     return (
@@ -40,10 +52,18 @@ function Header() {
                             </div>
                         </li>
                         <li className="rate nav-li"><a type="button" className="nav-button" href="/ko-KR"><span role="textbox">평가</span></a></li>
-                        <li className="myPage nav-li"><a type="button" data-select="header-my-watcha-page" title="my page" href="/ko-KR/users/Q9L5prw7dYqNb"><span className="ZTeRZiZs" role="textbox">마이 페이지</span></a></li>
+                        <li className="myPage nav-li">
+                            {/* 로그인 버튼 클릭 시 모달 열기 */}
+                            <button onClick={openModal} className="nav-button">
+                                <span className="ZTeRZiZs" role="textbox">로그인</span>
+                            </button>
+                        </li>
                     </ul>
                 </section>
             </nav>
+
+            {/* 로그인 모달 */}
+            {isModalOpen && <LoginPage onClose={closeModal} />}
         </header>
     );
 }
