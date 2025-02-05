@@ -219,6 +219,9 @@ h1{
 	display:table-cell;
 	text-align:center;
 	vertical-align:middle;
+	color: black;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
 }
 .icons>li>.icon_img>img{
@@ -287,19 +290,5 @@ h1{
 	cursor:pointer;
 	line-height:40px;
 	margin:16px auto;
-
-}
-#link_header
-footer{
-	display:flex;
-	background: #f1f1f1;
-}
-footer > div:first-child{
-	text-align:center;
-	color:#fff;
-}
-footer>div:last-child{
-	flex:9;
-	color:#fff;
 
 }

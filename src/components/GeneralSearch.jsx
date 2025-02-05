@@ -47,7 +47,7 @@ function GeneralSearch() {
   return (
     <div className="wrap">
       <div className="main_text0" id="link_main_text0">
-        <div style={{ marginLeft: '45px', width: '100px', fontSize: '20px' }}>
+        <div style={{ marginLeft: '45px', width: '100px', fontSize: '20px', color: 'black' }}>
           영화
         </div>
         <ul className="icons">

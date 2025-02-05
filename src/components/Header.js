@@ -6,12 +6,17 @@ import '../styles/Header.css';
 import LoginPage from './Login';
 
 function Header() {
+    const [inputSearchValue, setInputSearchValue] = useState(''); // 상태 선언
     const [inputValue, setInputValue] = useState(''); // 상태 선언
     const [searchResults,setSearchResults] = useState('');
     const [searchTerm,setSearchTerm] = useState('');
 
     const navigate = useNavigate();
     // 입력값 변경 처리 함수
+    const handleSearchChange = (e) => {
+        setInputSearchValue(e.target.value); // 상태 업데이트
+    };
+
     const handleChange = (e) => {
         setInputValue(e.target.value); // 상태 업데이트
     };
@@ -38,8 +43,8 @@ function Header() {
     };
     
       const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && inputValue.trim()) {
-          navigate(`/searchResult?word=${encodeURIComponent(inputValue)}`);
+        if (e.key === 'Enter' && inputSearchValue.trim()) {
+          navigate(`/searchResult?word=${encodeURIComponent(inputSearchValue)}`);
         }
       };
 
@@ -64,12 +69,10 @@ function Header() {
                                             placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요."
                                             type="text"
                                             name="word"
-                                            value={inputValue}
-                                            onChange={handleChange}
+                                            value={inputSearchValue}
+                                            onChange={handleSearchChange}
                                             onKeyDown={handleKeyPress}                                
                                         />
-                                        
-                                         <button onClick={() => handleKeyPress({ key: 'Enter' })}>검색</button>
                                     </label>
                                 </form>
                             </div>

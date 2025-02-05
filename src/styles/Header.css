@@ -47,6 +47,7 @@ button {
     align-items: center;
     display: flex;
     padding: 0 20px;
+    width: 100%;
 }
 
 .nav-li {
