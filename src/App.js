@@ -1,25 +1,30 @@
 import React from 'react';
+import GeneralSearch from './components/GeneralSearch';
+import { BrowserRouter,Route,Routes } from 'react-router-dom';
 import { AuthProvider } from './components/AuthContext';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import MainPage from './components/MainPage';
-import Mypage from './components/Mypage';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Layout from './components/Layout';
 
 function App() {
   return (
     <div>
-      <AuthProvider>
-            <Router>
+      <BrowserRouter>
+        <AuthProvider>
+          <Router>
               <Header />
               <Routes>
-                  <Route path="/" element={<MainPage />} />
-                  <Route path="/mypage" element={<Mypage />} />
+                  <Route element={<Layout />}>
+                    <Route path="/" element={<MainPage />} />
+                    <Route path="/searchResult" element={<GeneralSearch />} />
+                    <Route path="/mypage" element={<Mypage />} />
+                  </Route>
               </Routes>
             </Router>
             <Footer />
         </AuthProvider>
+      </BrowserRouter>
     </div>
   );
 }
