@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 import '../styles/Header.css';
 
 function Header() {
     const [inputValue, setInputValue] = useState(''); // 상태 선언
+    const [searchResults,setSearchResults] = useState('');
+    const [searchTerm,setSearchTerm] = useState('');
 
+    const navigate = useNavigate();
     // 입력값 변경 처리 함수
     const handleChange = (e) => {
         setInputValue(e.target.value); // 상태 업데이트
+
     };
+    
+      const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && inputValue.trim()) {
+          navigate(`/searchResult?word=${encodeURIComponent(inputValue)}`);
+        }
+      };
 
     return (
         <header className="header">
@@ -21,7 +32,7 @@ function Header() {
                         <li className="search search-div nav-li">
                             {/* 검색 입력 필드 */}
                             <div className="search-box">
-                                <form action="#">
+                                <form>
                                     <label className="search-label" data-select="gnb-search-label">
                                         {/* Material Icons */}
                                         <span className="material-icons">search</span>
@@ -31,10 +42,13 @@ function Header() {
                                             id="desktop-search-field"
                                             placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요."
                                             type="text"
-                                            name="searchKeyword"
+                                            name="word"
                                             value={inputValue}
                                             onChange={handleChange}
+                                            onKeyDown={handleKeyPress}                                
                                         />
+                                        
+                                         <button onClick={() => handleKeyPress({ key: 'Enter' })}>검색</button>
                                     </label>
                                 </form>
                             </div>
