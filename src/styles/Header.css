@@ -1,0 +1,145 @@
+@font-face {
+    font-family: 'EF_jejudoldam';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+
+html, body {
+    color: black;
+    background: white;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: Pretendard, Apple SD Gothic Neo, Nanum Gothic, Malgun Gothic, sans-serif;
+}
+
+header {
+    background-color: var(--color-background);
+    box-shadow: 0 1px #00000014;
+    z-index: 999;
+}
+
+.header {
+    width: 100%;
+    background-color: #fff;
+}
+
+nav {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+button {
+    background: none; /* 배경 제거 */
+    border: none; /* 테두리 제거 */
+    outline: none; /* 포커스 시 나타나는 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 모양을 버튼으로 설정 */
+    color: black;
+}
+
+.nav-list {
+    align-items: center;
+    display: flex;
+    padding: 0 20px;
+}
+
+.nav-li {
+    height: 62px;
+    flex-shrink: 0;
+    align-items: center;
+    margin: 0 0 0 10px;
+    display: flex;
+    position: relative;
+}
+
+ol, ul {
+    margin: 0;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    list-style-type: none;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    unicode-bidi: isolate;
+}
+
+li {
+    height: 62px;
+    flex-shrink: 0;
+    align-items: center;
+    margin: 0 0 0 10px;
+    display: flex;
+    position: relative;
+}
+
+
+.search.search-div {
+    flex-shrink: 1;
+    margin: 0 0 0 auto;
+    transition: all .5s;
+}
+.search-box {
+    width: 300px;
+    position: relative;
+    padding: 0 10px;
+}
+.search-label {
+    background-color: #eeeeee;
+    border-radius: 2px;
+    align-items: center;
+    height: 38px;
+    padding: 7px 12px 8px 20px;
+    display: flex;
+    position: relative;
+}
+
+.search-input {
+    -webkit-appearance: none;
+    appearance: none;
+    caret-color: #353535;
+    background: 0 0;
+    border: 0;
+    outline: none;
+    width: 100%;
+    padding: 0 0 1px;
+    overflow: hidden;
+}
+
+form {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+.logo{
+    font-family: 'EF_jejudoldam';
+    font-size: 36px;
+    padding: 10px 20px;
+    color:#1c1c1c;
+}
+
+span {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 20px;
+}
+
+a {
+    color: black;
+    text-decoration-line: none;
+}
+
+.search-icon {
+    margin-right: 10px;
+}
