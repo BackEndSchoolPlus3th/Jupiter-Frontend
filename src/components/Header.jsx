@@ -62,7 +62,7 @@ function Header() {
                                 <form>
                                     <label className="search-label" data-select="gnb-search-label">
                                         {/* Material Icons */}
-                                        <span className="material-icons">search</span>
+                                        {/* <span className="material-icons">search</span> */}
                                         <input
                                             autoComplete="off"
                                             className="search-input"
