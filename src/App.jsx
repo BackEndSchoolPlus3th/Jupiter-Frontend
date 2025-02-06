@@ -12,7 +12,7 @@ import Layout from './components/layout/Layout';
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<MainPage />} />
@@ -20,7 +20,7 @@ function App() {
             <Route path="/mypage" element={<Mypage />} />
           </Route>
         </Routes>
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </BrowserRouter>
   )
 }
