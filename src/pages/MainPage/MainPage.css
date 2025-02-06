@@ -68,8 +68,8 @@
 
 /* 영화 포스터 이미지 스타일 */
 .movie-poster {
-    width: 100%;
-    height: 100%;
+    width: 200px; /* 각 영화 항목의 너비 */
+    height: 320px; /* 영화 항목의 높이 */
     object-fit: cover;
     display: block;
     border-radius: 10px;
