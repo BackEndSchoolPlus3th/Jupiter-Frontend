@@ -88,7 +88,7 @@ function MainPage() {
         // 백엔드 서버가 동작하는지 체크하는 함수
         const checkBackendAvailability = async () => {
             try {
-                await axios.get('http://localhost:8090/');
+                await axios.get('http://localhost:8090/api/v1/movie/top-rated');
                 return true; // 서버가 정상
             } catch (err) {
                 return false; // 서버가 비정상
@@ -100,7 +100,6 @@ function MainPage() {
 
     return (
         <div className="contents">
-            <Header />
             <div className="contents-div">
                 {/* 인기 영화 섹션 */}
                 <MovieSection title="PopularMovies" movies={popularMovies} loading={loading} error={error} />
@@ -114,7 +113,6 @@ function MainPage() {
                 {/* 코미디 영화 섹션 */}
                 <MovieSection title="ComedyMovies" movies={comedyMovies} loading={loading} error={error} />
             </div>
-            <Footer />
         </div>
     );
 }
