@@ -1,0 +1,294 @@
+/* *{
+		font-family: 'Noto Sans KR', sans-serif;
+		list-style:none;
+		text-decoration:none;
+		border-collapse:collapse;
+		margin:0px;
+		padding:0px;
+		color:#000;
+		} */
+/* .intro_bg{
+	background-image:url('image/intro.png');
+	width:100%;
+	height:718px;
+}
+.header{
+	display:flex;
+	width:1280px;
+	margin:auto;
+	height:86px;
+
+} */
+html, body{
+	
+	width: 100%;
+	overflow-x:hidden;
+	
+ }
+ header > .nav{
+	width: 100%;
+ }
+ .nav{
+	 width:100%;
+ }
+ .wrap{
+	margin: auto;
+ }
+h1{
+	font-size:48;
+	font-weight:100;
+}
+.main_text0{
+	padding-top:200px;
+	height: 200px;
+}
+.contents1{
+	font-size:20px;
+	font-weight:lighter;
+}
+.contenst1_bold{
+	font-size:18px;
+	font-weight:bold;
+}
+.icons .contents2{
+	width:184px;
+	margin:auto;
+	margin-top:3px;
+	letter-spacing:-2;
+	font-size:14px;
+	font-weight:100;
+
+}
+.contents3{
+	font-size:14px;
+	font-weight:100;
+}
+.result{
+	font-size:24px;
+
+}
+.searchArea{
+	width:300px;
+	height:40px;
+	background:rgba(0,0,0,0.5);
+	border-radius:5px;
+	margin-top:24px;
+}
+.searchArea > form > input{
+	border:none;
+	background-color:rgba(0,0,0,0.0);
+	width:250px; 
+	height:40px;
+	color: black;
+	padding-left:10px;
+}
+.searchArea > form > span{
+	width:50px;
+	color:#fff;
+	font-weight:bold;
+	cursor:pointer;
+}
+.nav{
+	display:flex;
+	width:100%;
+	/* justify-content: flex-end; */
+
+	line-height:86px;
+}
+.nav > li{
+	margin-left:84px;
+	
+}
+.nav>li>a{
+	color:#fff;
+}
+.intro_text {
+	width:100%;
+	margin:231px auto 231px auto;
+	color:white;
+	text-align:center;
+	
+}
+.nav > li > a{
+	color:black;
+}
+.amount{
+	position :relative;
+	top:-66px;
+	display:flex;
+	width:1280px;
+	background:#fff;
+	margin:auto;
+	box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+	
+}
+
+.amount > li{
+	flex:1;
+	height:132px;
+
+}
+
+.amount > li> div{
+	text-align:center;
+	margin-top:37px;
+	height:57px;
+}
+.amount > li:not(:last-child) >div{
+	border-right:1px solid #E1E1E1;
+}
+.intro_text{
+	width:100%;
+	margin:231px auto 231px auto;
+	text-align:center;
+}
+.intro_text > h1,
+.intro_text > h4{
+	color:black;
+}
+.main_text0{
+	margin-top:-132px;
+	/*margin은 실제 그 위치에 있는거임 
+	position은 보이는 위치가 위에 있다고 해서 거기에 실제로 있는 것이 아님.  */
+	height:auto;
+  padding-bottom: 100px;
+  
+	background:#f1f2f3;
+	border-bottom:solid 1px gray;
+	
+}
+.main_text0 > h1{
+	margin-top:116px;
+	text-align:center;
+}
+.main_text0 > .contents1{
+	text-align:center;
+}
+.main_text1{
+	width:100%;
+	height:659px;
+}
+.main_text1 >h1{
+	padding-top:50px;
+	text-align:center;
+}
+.book_infos{
+	display:grid;
+	grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+	width:1280px;
+}
+.book_infos > li{
+  list-style: none;
+  display: flex;
+	width: 400px;
+	height:100px;
+}
+.book_img{
+	margin-right: 15px;
+}
+.book_title{
+	margin-bottom: 10px;
+}
+.book_img{
+	width:70px;
+	height:100px;
+	
+}
+.book_img > img{
+	width: 70px;
+	height: 100px;
+}
+.icons{
+	display:grid;
+  text-align: justify;
+  vertical-align: middle;
+	align-items: center;
+	grid-template-columns: repeat(6, 1fr);
+	width: 1350px;
+  list-style-type: none;
+	margin:auto;
+  
+}
+.icons > li{
+	
+	background:white;
+	height:350px;
+	width:200px;
+	margin-top:49px;
+	display:table-cell;
+	text-align:center;
+	vertical-align:middle;
+	color: black;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+.icons>li>.icon_img>img{
+	margin-top:2px;
+	
+	height:260px;
+}
+.icon_img{
+	height:270px;
+	width:200px;
+	
+}
+.icons contents1{
+	width:180px;
+}
+.icons > li:not(:last-child){
+	margin-right:10px;
+}
+.more{
+	width:100px;
+	height:30px;
+	background:#2F7AF4;
+	color:#fff;
+	line-height:30px;
+	margin:25px auto;
+	font-size:12px;
+}
+.service{
+	width:1280px;
+	display:flex;
+	margin:49px auto;
+	height:427px;
+	
+}
+.service > .contents2{
+	padding:20px;
+
+}
+.service > .contents2 > {
+	margin-bottom:27px;
+}
+.main_text2{
+	width:100%;
+	height:418px;
+	
+}
+
+.main_text2 > ul {
+	display:flex;
+	padding-top:138px;
+	
+}
+.main_text2 > ul>li{
+	flex:1;
+	text-align:center;
+}
+.main_text2 > li > div> h1,
+.main_text2 > li > div
+{
+	color:white;
+}
+.more2{
+	width:220px;
+	height:40px;
+	border:1px solid #fff;
+	cursor:pointer;
+	line-height:40px;
+	margin:16px auto;
+
+}

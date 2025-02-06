@@ -1,11 +1,8 @@
-### .gitmessage.txt 설정 방법
-```
-git config --global commit.template /path/to/.gitmessage.txt
-```
-/path/to 는 클론받은 파일의 path 입니다.
+# React + Vite
 
-### 적용 여부 확인
-```
-git config --get commit.template
-```
-출력이 .gitmessage.txt 경로를 가리키면 성공입니다.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

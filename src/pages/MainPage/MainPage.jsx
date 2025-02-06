@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import '../styles/MainPage.css';
+import './MainPage.css';
 
-import Header from './Header';
-import Footer from './Footer';
-import Banner from './Banner';
+import Banner from '../../components/banners/Banner';
 
 function MainPage() {
     const [popularMovies, setBoxOfficeMovies] = useState([]);
@@ -42,10 +40,10 @@ function MainPage() {
                 setLoading(true);
                 // 백엔드 요청 대신 로컬 데이터를 사용
                 if (false) {  // 백엔드가 꺼졌을 때 로컬 데이터를 사용할 수 있도록 조건 추가
-                    const popularMovies = await axios.get('http://localhost:8090/api/movies/popular');
+                    const popularMovies = await axios.get('http://localhost:8090/api/v1/movie/popular');
                     setBoxOfficeMovies(popularMovies.data);
 
-                    const topRatedMovies = await axios.get('http://localhost:8090/api/movies/top-rated');
+                    const topRatedMovies = await axios.get('http://localhost:8090/api/v1/movie/top-rated');
                     setRecommendedMovies(topRatedMovies.data);
                 } else {
                     // 백엔드 꺼져 있을 때 로컬 데이터를 사용
@@ -65,7 +63,6 @@ function MainPage() {
 
     return (
         <div className="contents">
-            <Header />
             <div className="banner"></div>
             <div className="contents-div">
                 {/* 인기 영화 섹션 */}
@@ -118,7 +115,6 @@ function MainPage() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }
