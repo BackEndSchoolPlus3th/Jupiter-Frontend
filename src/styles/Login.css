@@ -10,10 +10,11 @@
 }
 
 body {
-    margin: 0;
+    /* margin: 0;
     font-family: Arial, sans-serif;
     color: #fff;
-    height: 100vh;
+    height: 100vh; */
+    display: block;
 }
 
 .overlay {
