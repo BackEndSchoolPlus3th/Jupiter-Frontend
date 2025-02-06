@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 
-import '../styles/Header.css';
-import LoginPage from './Login';
+import '../../styles/Header.css';
+import LoginPage from '../modals/LoginModal';
 
 function Header() {
     const [inputSearchValue, setInputSearchValue] = useState(''); // 상태 선언

@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import GeneralSearch from './components/GeneralSearch';
+import GeneralSearch from './pages/SearchPage/SearchPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './components/AuthContext';
-import MainPage from './components/MainPage';
-import Mypage from './components/Mypage';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Layout from './components/Layout';
+import { AuthProvider } from './components/contexts/AuthContext';
+import MainPage from './pages/MainPage/MainPage';
+import Mypage from './pages/MyPage/MyPage';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+import Layout from './components/layout/Layout';
 
 
 function App() {

@@ -1,6 +1,6 @@
 // src/contexts/AuthContext.js
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getProfile, login as apiLogin, logout as apiLogout } from '../api/auth';
+import { getProfile, login as apiLogin, logout as apiLogout } from '../../api/auth';
 
 // Context 생성
 const AuthContext = createContext();
