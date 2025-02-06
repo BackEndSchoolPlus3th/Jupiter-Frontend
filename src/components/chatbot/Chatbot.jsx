@@ -97,7 +97,7 @@ function Chatbot() {
 
     const fetchPreviousMessages = async () => {
         try {
-            const response = await axios.get('http://localhost:8090/api/chat/previousMessages', {
+            const response = await axios.get('http://localhost:8090/api/v1/chat/previousMessages', {
                 params: { userId },
             });
 
