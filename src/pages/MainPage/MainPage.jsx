@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './MainPage.css';
+import { Link } from 'react-router-dom';
 
 import Banner from '../../components/banners/Banner';
 
@@ -17,12 +18,14 @@ function MovieSection({ title, movies, loading, error }) {
                     <ul className="contents-ul">
                         {movies.map((movie) => (
                             <li key={movie.id}>
-                                <img
-                                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                    alt={movie.title}
-                                    className="movie-poster"
-                                />
-                                {movie.title}
+                                <Link to={`/detail/${movie.id}`}>
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                        alt={movie.title}
+                                        className="movie-poster"
+                                    />
+                                    {movie.title}
+                                </Link>
                             </li>
                         ))}
                     </ul>
@@ -103,13 +106,13 @@ function MainPage() {
             <div className="contents-div">
                 {/* 인기 영화 섹션 */}
                 <MovieSection title="PopularMovies" movies={popularMovies} loading={loading} error={error} />
-                
+
                 {/* 추천 영화 섹션 */}
                 <MovieSection title="TopRatedMovies" movies={topRatedMovies} loading={loading} error={error} />
-                
+
                 {/* 액션 영화 섹션 */}
                 <MovieSection title="ActionMovies" movies={actionMovies} loading={loading} error={error} />
-                
+
                 {/* 코미디 영화 섹션 */}
                 <MovieSection title="ComedyMovies" movies={comedyMovies} loading={loading} error={error} />
             </div>
