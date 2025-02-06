@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useAuth } from './AuthContext';
+import { useAuth } from '../../components/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import useAuthHook from '../hooks/useAuthHook';
+import useAuthHook from '../../hooks/useAuthHook';
 
-import '../styles/Mypage.css';
+import './Mypage.css';
 
 const MyPage = () => {
   const { user, logout, loading } = useAuthHook();

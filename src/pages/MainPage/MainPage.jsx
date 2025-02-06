@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import '../styles/MainPage.css';
+import './MainPage.css';
 
-import Banner from './Banner';
+import Banner from '../../components/banners/Banner';
 
 function MainPage() {
     const [popularMovies, setBoxOfficeMovies] = useState([]);

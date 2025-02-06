@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import '../styles/GeneralSearch.css';
+import './SearchPage.css';
 import axios from 'axios'; // 1. Axios 대소문자 수정
 
 function GeneralSearch() {
