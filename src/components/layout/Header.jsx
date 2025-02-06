@@ -23,7 +23,7 @@ function Header() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(true); // 로그인 상태 관리
 
-    const { user, login, logout } = useAuth(); // 유저 정보와 로그인, 로그아웃 함수 가져오기
+    // const { user, login, logout } = useAuth(); // 유저 정보와 로그인, 로그아웃 함수 가져오기
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -79,7 +79,10 @@ function Header() {
                         </li>
                         <li className="rate nav-li"><a className="nav-button" href="/ko-KR"><span role="textbox">평가</span></a></li>
                         <li className="myPage nav-li">
-                            {user ? (
+                                <button onClick={openModal} className="nav-button">
+                                    <span role="textbox">로그인</span>
+                                </button>
+                            {/* {user ? (
                                 <>
                                     <a className="nav-button" href="/mypage">
                                         <span role="textbox">마이페이지</span>
@@ -92,7 +95,7 @@ function Header() {
                                 <button onClick={openModal} className="nav-button">
                                     <span role="textbox">로그인</span>
                                 </button>
-                            )}
+                            )} */}
                         </li>
                     </ul>
                 </section>
