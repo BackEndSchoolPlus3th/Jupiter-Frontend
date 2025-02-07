@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import axios from 'axios';
+import './Chatbot.css';
 
 function Chatbot() {
     const [isChatbotOpen, setIsChatbotOpen] = useState(false);
@@ -49,6 +50,10 @@ function Chatbot() {
             ...prevMessages,
             { message, sender },
         ]);
+    };
+
+    const formatMessage = (message) => {
+        return <span dangerouslySetInnerHTML={{ __html: message }} />;
     };
 
     useEffect(() => {
@@ -134,7 +139,7 @@ function Chatbot() {
                 <div className="chatbot-content" ref={chatbotContentRef}>
                     {messages.map((msg, index) => (
                         <div key={index} className={`message ${msg.sender}`}>
-                            {msg.message}
+                            {formatMessage(msg.message)}  {/* HTML로 변환된 메시지 출력 */}
                         </div>
                     ))}
                 </div>
