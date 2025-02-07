@@ -164,29 +164,29 @@ function MainPage() {
                 </div>
 
                 {/* 두 번째로 좋아하는 장르 영화 섹션 */}
-                                <div className="box-recommend">
-                                    <p className="contents-title">당신이 꽤 좋아하는 장르 영화</p>
-                                    <div className="contents-box">
-                                        {loading ? (
-                                            <p>로딩 중...</p>
-                                        ) : error ? (
-                                            <p>{error}</p>  // 에러 메시지 표시
-                                        ) : (
-                                            <ul className="contents-ul">
-                                                {likeGenreMovies_2nd.map((movie) => (
-                                                    <li key={movie.id}>
-                                                        <img
-                                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                                            alt={movie.title}
-                                                            className="movie-poster"
-                                                        />
-                                                        {movie.title}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </div>
-                                </div>
+                <div className="box-recommend">
+                    <p className="contents-title">당신이 꽤 좋아하는 장르 영화</p>
+                    <div className="contents-box">
+                        {loading ? (
+                            <p>로딩 중...</p>
+                        ) : error ? (
+                            <p>{error}</p>  // 에러 메시지 표시
+                        ) : (
+                            <ul className="contents-ul">
+                                {likeGenreMovies_2nd.map((movie) => (
+                                    <li key={movie.id}>
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                            alt={movie.title}
+                                            className="movie-poster"
+                                        />
+                                        {movie.title}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );
