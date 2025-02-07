@@ -211,6 +211,11 @@ textarea {
   height: 100%;
 }
 
+.star-rating {
+  width: 44px;
+  height: 44px;
+}
+
 .top-banner-content-box {
   opacity: 65%;
   width: calc(100% - 40px);

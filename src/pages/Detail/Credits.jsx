@@ -14,7 +14,7 @@ function Credits() {
                   </header>
                   <section className="members-wrap">
                     <div className="members-container">
-                      {movieDetail?.genres?.replace(/,$/, "").split(",").join(", ")}
+                      {movieDetail?.actors?.replace(/,$/, "").split(",").join(", ")}
                     </div>
                   </section>
                 </section>

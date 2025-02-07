@@ -5,6 +5,7 @@ import useMovieDetail from "../../hooks/useMovieDetail";
 
 function Content() {
   const [comment, setComment] = useState(""); // 입력된 값 저장
+  const [starPoint, setStarPoint] = useState(0); // 별점 상태 추가
 
   const handleChange = (e) => {
     setComment(e.target.value);
@@ -22,7 +23,7 @@ function Content() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ content: comment }),
+        body: JSON.stringify({ reviewContent: comment, movie: id, userId: 1, rating: starPoint }),
         credentials: "include",
       });
 
@@ -77,6 +78,62 @@ function Content() {
     saveBtn.addEventListener("click", () => {
       reviewTextCount.innerText = `0 / 10000`;
     });
+
+    const starRating = document.querySelectorAll('.star-rating')
+    const starRating1 = document.querySelector('.star-rating1')
+    const starRating2 = document.querySelector('.star-rating2')
+    const starRating3 = document.querySelector('.star-rating3')
+    const starRating4 = document.querySelector('.star-rating4')
+    const starRating5 = document.querySelector('.star-rating5')
+
+    let starPoint = 0
+
+    starRating.forEach((star) => {
+      star.addEventListener('click', (e) => {
+        // console.log(e.target.parentNode)
+        // console.log(starRating1)
+        // e.target.parentNode.style = "color: red"
+        // e.target.parentNode.previousSibling.style = "color: red"
+        if (e.target.parentNode === starRating1) {
+          setStarPoint(1);
+          starRating1.style = "color: red"
+          starRating2.style = "color: black"
+          starRating3.style = "color: black"
+          starRating4.style = "color: black"
+          starRating5.style = "color: black"
+        } else if (e.target.parentNode === starRating2) {
+          setStarPoint(2);
+          starRating1.style = "color: red"
+          starRating2.style = "color: red"
+          starRating3.style = "color: black"
+          starRating4.style = "color: black"
+          starRating5.style = "color: black"
+        } else if (e.target.parentNode === starRating3) {
+          setStarPoint(3);
+          starRating1.style = "color: red"
+          starRating2.style = "color: red"
+          starRating3.style = "color: red"
+          starRating4.style = "color: black"
+          starRating5.style = "color: black"
+        } else if (e.target.parentNode === starRating4) {
+          setStarPoint(4);
+          starRating1.style = "color: red"
+          starRating2.style = "color: red"
+          starRating3.style = "color: red"
+          starRating4.style = "color: red"
+          starRating5.style = "color: black"
+        } else if (e.target.parentNode === starRating5) {
+          setStarPoint(5);
+          starRating1.style = "color: red"
+          starRating2.style = "color: red"
+          starRating3.style = "color: red"
+          starRating4.style = "color: red"
+          starRating5.style = "color: red"
+        }
+
+      })
+    })
+
   });
 
   return (
@@ -89,21 +146,6 @@ function Content() {
                 <img src={`https://image.tmdb.org/t/p/original${movieDetail?.poster_path}`} alt="" className="mid-content-img" />
               </div>
             </div>
-            {/* <section className="rating-box">
-              <div className="rating-text">별점 그래프</div>
-              <span className="rating-average-box">
-                평균&nbsp;
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
-                  <path
-                    fill="currentColor"
-                    d="M5.651 1.806a.375.375 0 0 1 .673 0l1.361 2.759a.13.13 0 0 0 .094.068l3.044.442c.308.045.43.423.208.64L8.828 7.862a.13.13 0 0 0-.036.11l.52 3.032a.375.375 0 0 1-.544.395L6.046 9.97a.13.13 0 0 0-.117 0l-2.722 1.43a.375.375 0 0 1-.544-.395l.52-3.031a.13.13 0 0 0-.036-.111L.944 5.715a.375.375 0 0 1 .208-.64l3.044-.442a.13.13 0 0 0 .094-.068z"
-                  ></path>
-                </svg>
-                {(movieDetail?.vote_average / 2)?.toFixed(1)}
-                <strong className="rating-count">{movieDetail?.vote_count}</strong>
-              </span>
-              <div className="rating-graph"></div>
-            </section> */}
           </div>
           <div className="mid-content-right">
             <section className="mid-content-right-estimate">
@@ -112,17 +154,16 @@ function Content() {
                   <div className="star-images-container" data-select="content-rating-stars">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      style={{ width: "44", height: "44" }}
                       fill="none"
                       viewBox="0 0 24 24"
-                      className="n_QBRgMG"
+                      className="star-rating star-rating1"
                     >
                       <path
                         fill="currentColor"
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
                       ></path>
                     </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" style={{ width: "44", height: "44" }} fill="none" viewBox="0 0 24 24" class="n_QBRgMG">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class=" star-rating star-rating2">
                       <path
                         fill="currentColor"
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
@@ -130,22 +171,9 @@ function Content() {
                     </svg>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      style={{ width: "44", height: "44" }}
                       fill="none"
                       viewBox="0 0 24 24"
-                      className="n_QBRgMG"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
-                      ></path>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      style={{ width: "44", height: "44" }}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="n_QBRgMG"
+                      className="star-rating star-rating3"
                     >
                       <path
                         fill="currentColor"
@@ -154,10 +182,20 @@ function Content() {
                     </svg>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      style={{ width: "44", height: "44" }}
                       fill="none"
                       viewBox="0 0 24 24"
-                      className="n_QBRgMG"
+                      className="star-rating star-rating4"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
+                      ></path>
+                    </svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      className="star-rating star-rating5"
                     >
                       <path
                         fill="currentColor"

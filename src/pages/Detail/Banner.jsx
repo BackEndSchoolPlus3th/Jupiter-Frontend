@@ -26,7 +26,7 @@ function Banner() {
         <div>
           <h1 className="top-banner-text-big-title">{movieDetail?.title}</h1>
           <div className="top-banner-text-small-title">{movieDetail?.title}</div>
-          <div className="top-banner-text-content1">{movieDetail?.release_date} · 로맨스/드라마/TV드라마</div>
+          <div className="top-banner-text-content1">{movieDetail?.release_date} · {movieDetail?.genres}</div>
           <div className="top-banner-text-content2">{movieDetail?.original_country} · 15세</div>
         </div>
       </div>
