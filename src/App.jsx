@@ -4,8 +4,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './components/contexts/AuthContext';
 import MainPage from './pages/MainPage/MainPage';
 import Mypage from './pages/MyPage/MyPage';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
 import Layout from './components/layout/Layout';
 
 
