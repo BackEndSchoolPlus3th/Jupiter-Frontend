@@ -39,7 +39,45 @@ function GeneralSearch() {
 
     fetchData();
   }, [word]); // 7. word 의존성 추가
+  const handleSelectChange = (e) => {
+   
+    submitOrderByLatest(e.target.value);
+  }
+  // const submitOrderByPopular = async () => {
+  //   try {
+    
+  //     const response = await axios.get(
+  //       'http://localhost:8090/api/v1/movie/search/popular',
+  //       { params: { word } }
+  //     );
+  //     setData(response.data);
+  //   } catch (error) {
+     
+  //     console.error('검색 오류:', error);
+  //     setError(error.message);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
+  const submitOrderByLatest = async (option) =>{
+    try {
+    
+      const response = await axios.get(
+        `http://localhost:8090/api/v1/movie/search/${option}`,
+        { params: { word } }
+      );
+      setData(response.data);
+    } catch (error) {
+     
+      console.error('검색 오류:', error);
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  
   // 8. 조건부 렌더링 위치 수정
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -47,8 +85,13 @@ function GeneralSearch() {
   return (
     <div className="wrap">
       <div className="main_text0" id="link_main_text0">
-        <div style={{ marginLeft: '45px', width: '100px', fontSize: '20px', color: 'black' }}>
-          영화
+        <div style={{ marginLeft: '45px', width: '95%', fontSize: '20px', color: 'black',display: 'flex',justifyContent: 'space-between' }}>
+          <div>영화</div>
+        <div>
+          <select onChange={handleSelectChange}>
+            <option value="latest">최신순</option>
+            <option value="popular">인기순</option>
+          </select></div> 
         </div>
         <ul className="icons">
           {data.map((item) => (
