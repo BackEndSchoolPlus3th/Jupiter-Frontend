@@ -4,7 +4,7 @@ import './MainPage.css';
 
 import Banner from '../../components/banners/Banner';
 // 모든 axios 요청에 쿠키 포함
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 function MainPage() {
     const [popularMovies, setBoxOfficeMovies] = useState([]);
