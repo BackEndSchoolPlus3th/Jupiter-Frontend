@@ -55,6 +55,8 @@ const LoginPage = ({ onClose }) => {
               const response = await axios.post("http://localhost:8090/api/v1/member/login", {
                 email,
                 password,
+              },{
+                 withCredentials: true  // 요청에 쿠키 포함
               });
 
               console.log("로그인 성공:", response.data);
