@@ -67,6 +67,7 @@ const LoginPage = ({ onClose }) => {
 
               alert("로그인 성공!");
               onClose();
+              window.location.reload(); // 새로고침
 
             } catch (error) {
               console.error("로그인 실패:", error.response?.data || error.message);
@@ -87,6 +88,7 @@ const LoginPage = ({ onClose }) => {
 
           alert("회원가입 성공!");
           onClose();
+          window.location.reload(); // 새로고침
 
         } catch (error) {
           console.error("회원가입 실패:", error.response?.data || error.message);
