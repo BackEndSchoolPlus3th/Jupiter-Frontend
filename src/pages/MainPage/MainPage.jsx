@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import './MainPage.css';
 
 import Banner from '../../components/banners/Banner';
+// 모든 axios 요청에 쿠키 포함
+// axios.defaults.withCredentials = true;
 
 function MainPage() {
     const [popularMovies, setBoxOfficeMovies] = useState([]);
@@ -11,6 +13,19 @@ function MainPage() {
     const [likeGenreMovies_2nd, setLikeGenreMovies_2nd] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // ⭐ 새로고침 시 쿠키를 가져와 상태 유지
+    useEffect(() => {
+        const checkCookie = async () => {
+            try {
+                const res = await axios.get('http://localhost:8090/api/v1/auth/check'); // 서버에서 쿠키 확인 API 호출
+                console.log('쿠키 확인:', res.data);
+            } catch (err) {
+                console.error('쿠키 확인 실패:', err);
+            }
+        };
+        checkCookie();
+    }, []);
 
     // 로컬 데이터 설정
     const localPopularMovies = [
@@ -60,11 +75,15 @@ function MainPage() {
                     setRecommendedMovies(topRatedMovies.data);
 
                     // 좋아하는 첫 번째 장르의 영화
-                    const likeGenreMovies = await axios.get('http://localhost:8090/api/v1/movie/likes');
+                    const likeGenreMovies = await axios.get('http://localhost:8090/api/v1/movie/likes', {
+                        withCredentials: true
+                    });
                     setLikeGenreMovies(likeGenreMovies.data);
 
                     // 좋아하는 두 번째 장르의 영화
-                    const likeGenreMovies_2nd = await axios.get('http://localhost:8090/api/v1/movie/likes_2nd');
+                    const likeGenreMovies_2nd = await axios.get('http://localhost:8090/api/v1/movie/likes_2nd', {
+                        withCredentials: true
+                    });
                     setLikeGenreMovies_2nd(likeGenreMovies_2nd.data);
                 } else {
                     // 백엔드 꺼져 있을 때 로컬 데이터를 사용
@@ -164,29 +183,29 @@ function MainPage() {
                 </div>
 
                 {/* 두 번째로 좋아하는 장르 영화 섹션 */}
-                                <div className="box-recommend">
-                                    <p className="contents-title">당신이 꽤 좋아하는 장르 영화</p>
-                                    <div className="contents-box">
-                                        {loading ? (
-                                            <p>로딩 중...</p>
-                                        ) : error ? (
-                                            <p>{error}</p>  // 에러 메시지 표시
-                                        ) : (
-                                            <ul className="contents-ul">
-                                                {likeGenreMovies_2nd.map((movie) => (
-                                                    <li key={movie.id}>
-                                                        <img
-                                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                                            alt={movie.title}
-                                                            className="movie-poster"
-                                                        />
-                                                        {movie.title}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </div>
-                                </div>
+                <div className="box-recommend">
+                    <p className="contents-title">당신이 꽤 좋아하는 장르 영화</p>
+                    <div className="contents-box">
+                        {loading ? (
+                            <p>로딩 중...</p>
+                        ) : error ? (
+                            <p>{error}</p>  // 에러 메시지 표시
+                        ) : (
+                            <ul className="contents-ul">
+                                {likeGenreMovies_2nd.map((movie) => (
+                                    <li key={movie.id}>
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                            alt={movie.title}
+                                            className="movie-poster"
+                                        />
+                                        {movie.title}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );
