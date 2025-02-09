@@ -1,8 +1,8 @@
 // src/components/Footer.js
 import React from 'react';
-import '../styles/Footer.css';
+import '../../styles/Footer.css';
 
-import Chatbot from './Chatbot';
+import Chatbot from '../chatbot/Chatbot';
 
 function Footer() {
   return (

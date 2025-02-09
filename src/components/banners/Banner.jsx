@@ -1,6 +1,6 @@
 // src/components/Banner.js
 import React from 'react';
-import '../styles/Banner.css';
+import './Banner.css';
 
 function Banner() {
     return (

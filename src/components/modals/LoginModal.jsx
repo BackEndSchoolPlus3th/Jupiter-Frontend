@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/Login.css'; // 스타일 파일 import
+import './LoginModal.css'; // 스타일 파일 import
 
 const LoginPage = ({ onClose }) => {
   const [isLogin, setIsLogin] = useState(true); // 로그인 상태를 관리
