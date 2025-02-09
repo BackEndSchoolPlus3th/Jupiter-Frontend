@@ -163,7 +163,7 @@ function Content() {
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
                       ></path>
                     </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class=" star-rating star-rating2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className=" star-rating star-rating2">
                       <path
                         fill="currentColor"
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
@@ -281,7 +281,7 @@ function Content() {
               </div>
               <div className="estimate-acting">
                 <button className="acting-bookmark" type="button">
-                  <svg
+                  {/* <svg
                     xmlns="http://www.w3.org/2000/svg"
                     style={{ width: "48", height: "48" }}
                     fill="none"
@@ -293,6 +293,13 @@ function Content() {
                       fillRule="evenodd"
                       d="M24 4.8a2 2 0 0 0-2 2V22H6.8a2 2 0 1 0 0 4H22v15.2a2 2 0 1 0 4 0V26h15.2a2 2 0 0 0 0-4H26V6.8a2 2 0 0 0-2-2"
                       clipRule="evenodd"
+                    ></path>
+                  </svg> */}
+                  <svg xmlns="http://www.w3.org/2000/svg" style={{ width: "48", height: "48" }} fill="none" viewBox="0 0 24 24" className="bookmark-btn">
+                    <rect width="4" height="11" x="2" y="10" fill="currentColor" rx="0.75"></rect>
+                    <path
+                      fill="currentColor"
+                      d="M7.5 9.31a.75.75 0 0 1 .22-.53l5.75-5.75a.75.75 0 0 1 1.06 0l.679.679a.75.75 0 0 1 .202.693L14.5 8.5h6.75a.75.75 0 0 1 .75.75v3.018a6 6 0 0 1-.485 2.364l-2.32 5.413a.75.75 0 0 1-.69.455H8.25a.75.75 0 0 1-.75-.75z"
                     ></path>
                   </svg>
                   보고싶어요
