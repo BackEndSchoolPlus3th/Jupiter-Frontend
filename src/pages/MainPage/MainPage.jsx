@@ -18,10 +18,13 @@ function MainPage() {
     useEffect(() => {
         const checkCookie = async () => {
             try {
-                const res = await axios.get('http://localhost:8090/api/v1/auth/check'); // 서버에서 쿠키 확인 API 호출
-                console.log('쿠키 확인:', res.data);
+                const res = await axios.get('http://localhost:8090/api/v1/auth/check', {
+                  withCredentials: true  // 쿠키 포함
+                });
+                console.log('로그인 성공, 쿠키 확인:', res.data);
             } catch (err) {
-                console.error('쿠키 확인 실패:', err);
+                console.log('비로그인 상태');
+//                 console.error('쿠키 확인 실패:', err);
             }
         };
         checkCookie();
