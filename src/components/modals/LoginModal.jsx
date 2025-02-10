@@ -53,7 +53,7 @@ const LoginPage = ({ onClose }) => {
       console.log(isLogin ? '로그인 시도:' : '회원가입 시도:', { email, password });
       if(isLogin){
           try {
-              const response = await axios.post("${API_BACKEND_URL}` + `/api/v1/member/login", {
+              const response = await axios.post(`${API_BACKEND_URL}/api/v1/member/login`, {
                 email,
                 password,
               },{
@@ -76,7 +76,7 @@ const LoginPage = ({ onClose }) => {
             }
       }else {
         try {
-          const response = await axios.post("${API_BACKEND_URL}/api/v1/member/signup", {
+          const response = await axios.post(`${API_BACKEND_URL}/api/v1/member/signup`, {
             email,
             password,
           });
