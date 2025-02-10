@@ -11,7 +11,7 @@ const useMovieDetail = (id) => {
         if (!id) return;
 
         // 🎬 영화 상세 정보 가져오기
-        const movieResponse = await axios.get(`http://localhost:8090/api/v1/movie/${id}`);
+        const movieResponse = await axios.get(`${API_BASE_URL}` + `/api/v1/movie/${id}`);
         setMovieDetail(movieResponse.data);
 
         // 🎥 유튜브 트레일러 가져오기
