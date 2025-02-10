@@ -2,6 +2,7 @@ import {useNavigate} from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { API_BACKEND_URL } from "../../config";
 import Cookies from "js-cookie";
 
 import '../../styles/Header.css';
@@ -17,11 +18,12 @@ function Header() {
     const [searchTerm,setSearchTerm] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    console.log('🚀 ~ isLoggedIn', `${API_BACKEND_URL}`);
     // ⭐ 새로고침 시 쿠키를 가져와 상태 유지
         useEffect(() => {
             const checkCookie = async () => {
                 try {
-                    const res = await axios.get('http://localhost:8090/api/v1/auth/check', {
+                    const res = await axios.get(`${API_BACKEND_URL}/api/v1/auth/check`, {
                     withCredentials: true  // 쿠키 포함
                     });
                     setIsLoggedIn(true);
@@ -64,7 +66,7 @@ function Header() {
     // 🔥 로그아웃 함수 (쿠키 삭제 후 새로고침)
     const handleLogout = async () => {
         try {
-            await axios.get('http://localhost:8090/api/v1/member/logout',{
+            await axios.get(`${API_BACKEND_URL}/api/v1/member/logout`,{
               withCredentials: true  // 요청에 쿠키 포함
             }); // 로그아웃 요청
             setIsLoggedIn(false);

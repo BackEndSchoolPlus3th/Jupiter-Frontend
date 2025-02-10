@@ -1,3 +1,3 @@
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const API_BACKEND_URL = import.meta.env.VITE_CORE_API_BASE_URL;
 
-export { API_BASE_URL };
+export { API_BACKEND_URL };

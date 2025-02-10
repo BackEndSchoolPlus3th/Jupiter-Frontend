@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_BACKEND_URL } from "../config";
 
 // Axios 인스턴스 생성
 const api = axios.create({
@@ -8,17 +9,17 @@ const api = axios.create({
 
 // 로그인 요청
 export const login = async (email, password) => {
-  const response = await api.post('ttp://localhost:8090/api/v1/member/login', { email, password });
+  const response = await api.post(`${API_BACKEND_URL}/api/v1/member/login`, { email, password });
   return response.data;
 };
 
 // 프로필 조회 (로그인 상태 확인)
 export const getProfile = async () => {
-  const response = await api.get('ttp://localhost:8090/api/v1/member/me');
+  const response = await api.get(`${API_BACKEND_URL}/api/v1/member/me`);
   return response.data;
 };
 
 // 로그아웃 요청
 export const logout = async () => {
-  await api.post('/api/v1/member/logout');
+  await api.post(`${API_BACKEND_URL}/api/v1/member/logout`);
 };
