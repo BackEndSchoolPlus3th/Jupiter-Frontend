@@ -224,7 +224,7 @@ h1{
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
 }
-.icons>li>.icon_img>img{
+.icon_img>img{
 	margin-top:2px;
 	
 	height:260px;
