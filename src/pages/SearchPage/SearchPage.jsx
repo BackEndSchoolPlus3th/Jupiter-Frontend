@@ -24,7 +24,7 @@ function GeneralSearch() {
       try {
       
         const response = await axios.get(
-          'http://localhost:8090/api/v1/movie/search',
+          `${API_BASE_URL}` + '/api/v1/movie/search',
           { params: { word } } 
         );
         setData(response.data);
@@ -49,7 +49,7 @@ function GeneralSearch() {
     try {
     
       const response = await axios.get(
-        `http://localhost:8090/api/v1/movie/search/${option}`,
+        `${API_BASE_URL}` + `/api/v1/movie/search/${option}`,
         { params: { word } }
       );
       setData(response.data);
