@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import { API_BACKEND_URL } from "../config";
 import axios from "axios";
 
 const useMovieDetail = (id) => {
   const [movieDetail, setMovieDetail] = useState(null);
   const [videoKey, setVideoKey] = useState(null);
+
+  console.log('detail : ', `${API_BACKEND_URL}`);
 
   useEffect(() => {
     const fetchMovies = async () => {
