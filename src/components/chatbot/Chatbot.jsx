@@ -3,6 +3,7 @@ import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import axios from 'axios';
 import './Chatbot.css';
+import { API_BACKEND_URL } from '../../config';
 
 function Chatbot() {
     const [isChatbotOpen, setIsChatbotOpen] = useState(false);
@@ -63,7 +64,8 @@ function Chatbot() {
     }, [isChatbotOpen, messages]);  // 챗봇 열릴 때와 메시지 추가될 때마다 실행
 
     useEffect(() => {
-        const socket = new SockJS('http://localhost:8090/chat');
+        // const socket = new SockJS('http://localhost:8090/chat');
+        const socket = new SockJS(`${API_BACKEND_URL}/chat`);
         stompClientRef.current = new Client({
             webSocketFactory: () => socket,
             onConnect: () => {
@@ -102,7 +104,8 @@ function Chatbot() {
 
     const fetchPreviousMessages = async () => {
         try {
-            const response = await axios.get('http://localhost:8090/api/v1/chat/previousMessages', {
+            // const response = await axios.get('http://localhost:8090/api/v1/chat/previousMessages', {
+            const response = await axios.get(`${API_BACKEND_URL}/api/v1/chat/previousMessages`, {
                 params: { userId },
             });
 
