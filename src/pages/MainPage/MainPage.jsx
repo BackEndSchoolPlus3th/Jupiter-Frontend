@@ -1,16 +1,49 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './MainPage.css';
+import { Link } from 'react-router-dom';
 
 import Banner from '../../components/banners/Banner';
 // 모든 axios 요청에 쿠키 포함
 // axios.defaults.withCredentials = true;
 
+function MovieSection({ title, movies, loading, error }) {
+    return (
+        <div className="box-recommend">
+            <p className="contents-title">{title}</p>
+            <div className="contents-box">
+                {loading ? (
+                    <p>로딩 중...</p>
+                ) : error ? (
+                    <p>{error}</p>
+                ) : (
+                    <ul className="contents-ul">
+                        {movies.map((movie) => (
+                            <li key={movie.id}>
+                                <Link to={`/detail/${movie.id}`}>
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                        alt={movie.title}
+                                        className="movie-poster"
+                                    />
+                                    {movie.title}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+        </div>
+    );
+}
+
 function MainPage() {
     const [popularMovies, setBoxOfficeMovies] = useState([]);
     const [topRatedMovies, setRecommendedMovies] = useState([]);
+  
     const [likeGenreMovies, setLikeGenreMovies] = useState([]);
     const [likeGenreMovies_2nd, setLikeGenreMovies_2nd] = useState([]);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -42,6 +75,7 @@ function MainPage() {
         { id: 8 },
         { id: 9 },
     ];
+  
     const localTopRatedMovies = [
         { id: 1 },
         { id: 2 },
@@ -69,6 +103,7 @@ function MainPage() {
         const fetchMovies = async () => {
             try {
                 setLoading(true);
+
                 // 백엔드 요청 대신 로컬 데이터를 사용
                 if (true) {  // 백엔드가 꺼졌을 때 로컬 데이터를 사용할 수 있도록 조건 추가
                     const popularMovies = await axios.get('http://localhost:8090/api/v1/movie/popular');
@@ -103,37 +138,24 @@ function MainPage() {
             }
         };
 
+        // 백엔드 서버가 동작하는지 체크하는 함수
+        const checkBackendAvailability = async () => {
+            try {
+                await axios.get('http://localhost:8090/api/v1/movie/top-rated');
+                return true; // 서버가 정상
+            } catch (err) {
+                return false; // 서버가 비정상
+            }
+        };
+
         fetchMovies();
     }, []);
 
     return (
         <div className="contents">
-            <div className="banner"></div>
             <div className="contents-div">
                 {/* 인기 영화 섹션 */}
-                <div className="box-office">
-                    <p className="contents-title">PopularMovies</p>
-                    <div className="contents-box">
-                        {loading ? (
-                            <p>로딩 중...</p>
-                        ) : error ? (
-                            <p>{error}</p>  // 에러 메시지 표시
-                        ) : (
-                            <ul className="contents-ul">
-                                {popularMovies.map((movie) => (
-                                    <li key={movie.id}>
-                                        <img
-                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                            alt={movie.title}
-                                            className="movie-poster"
-                                        />
-                                        {movie.title}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                </div>
+                <MovieSection title="PopularMovies" movies={popularMovies} loading={loading} error={error} />
 
                 {/* 추천 영화 섹션 */}
                 <div className="box-recommend">

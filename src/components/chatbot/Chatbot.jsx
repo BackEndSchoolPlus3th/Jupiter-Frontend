@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import axios from 'axios';
+import './Chatbot.css';
 
 function Chatbot() {
     const [isChatbotOpen, setIsChatbotOpen] = useState(false);
@@ -51,6 +52,10 @@ function Chatbot() {
         ]);
     };
 
+    const formatMessage = (message) => {
+        return <span dangerouslySetInnerHTML={{ __html: message }} />;
+    };
+
     useEffect(() => {
         if (isChatbotOpen && chatbotContentRef.current) {
             chatbotContentRef.current.scrollTop = chatbotContentRef.current.scrollHeight;
@@ -97,7 +102,7 @@ function Chatbot() {
 
     const fetchPreviousMessages = async () => {
         try {
-            const response = await axios.get('http://localhost:8090/api/chat/previousMessages', {
+            const response = await axios.get('http://localhost:8090/api/v1/chat/previousMessages', {
                 params: { userId },
             });
 
@@ -134,7 +139,7 @@ function Chatbot() {
                 <div className="chatbot-content" ref={chatbotContentRef}>
                     {messages.map((msg, index) => (
                         <div key={index} className={`message ${msg.sender}`}>
-                            {msg.message}
+                            {formatMessage(msg.message)}  {/* HTML로 변환된 메시지 출력 */}
                         </div>
                     ))}
                 </div>

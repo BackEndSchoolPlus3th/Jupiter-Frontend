@@ -1,0 +1,8 @@
+.message img {
+    max-width: 100%;  /* 부모 요소의 너비를 초과하지 않도록 설정 */
+    max-height: 300px;  /* 최대 높이를 300px로 제한 */
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* 이미지 중앙 정렬 */
+}
