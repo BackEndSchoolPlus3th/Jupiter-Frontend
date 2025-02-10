@@ -19,7 +19,7 @@ function Content() {
     }
 
     try {
-      const response = await fetch("${API_BACKEND_URL}/api/v1/movie/review/write", {
+      const response = await fetch(`${API_BACKEND_URL}/api/v1/movie/review/write`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
