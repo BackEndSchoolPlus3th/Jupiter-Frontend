@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { API_BASE_URL } from "./config";
 import './MainPage.css';
 import { Link } from 'react-router-dom';
+import { API_BACKEND_URL } from "../../config";
 
 import Banner from '../../components/banners/Banner';
 // 모든 axios 요청에 쿠키 포함
@@ -52,7 +52,7 @@ function MainPage() {
     useEffect(() => {
         const checkCookie = async () => {
             try {
-                const res = await axios.get(`${API_BASE_URL}` + '/api/v1/auth/check', {
+                const res = await axios.get(`${API_BACKEND_URL}/api/v1/auth/check`, {
                   withCredentials: true  // 쿠키 포함
                 });
                 console.log('로그인 성공, 쿠키 확인:', res.data);
@@ -107,20 +107,20 @@ function MainPage() {
 
                 // 백엔드 요청 대신 로컬 데이터를 사용
                 if (true) {  // 백엔드가 꺼졌을 때 로컬 데이터를 사용할 수 있도록 조건 추가
-                    const popularMovies = await axios.get(`${API_BASE_URL}` + '/api/v1/movie/popular');
+                    const popularMovies = await axios.get(`${API_BACKEND_URL}/api/v1/movie/popular`);
                     setBoxOfficeMovies(popularMovies.data);
 
-                    const topRatedMovies = await axios.get(`${API_BASE_URL}` + '/api/v1/movie/top-rated');
+                    const topRatedMovies = await axios.get(`${API_BACKEND_URL}/api/v1/movie/top-rated`);
                     setRecommendedMovies(topRatedMovies.data);
 
                     // 좋아하는 첫 번째 장르의 영화
-                    const likeGenreMovies = await axios.get(`${API_BASE_URL}` + '/api/v1/movie/likes', {
+                    const likeGenreMovies = await axios.get(`${API_BACKEND_URL}/api/v1/movie/likes`, {
                         withCredentials: true
                     });
                     setLikeGenreMovies(likeGenreMovies.data);
 
                     // 좋아하는 두 번째 장르의 영화
-                    const likeGenreMovies_2nd = await axios.get(`${API_BASE_URL}`+ '/api/v1/movie/likes_2nd', {
+                    const likeGenreMovies_2nd = await axios.get(`${API_BACKEND_URL}/api/v1/movie/likes_2nd`, {
                         withCredentials: true
                     });
                     setLikeGenreMovies_2nd(likeGenreMovies_2nd.data);
@@ -142,7 +142,7 @@ function MainPage() {
         // 백엔드 서버가 동작하는지 체크하는 함수
         const checkBackendAvailability = async () => {
             try {
-                await axios.get(`${API_BASE_URL}` + '/api/v1/movie/top-rated');
+                await axios.get(`${API_BACKEND_URL}/api/v1/movie/top-rated`);
                 return true; // 서버가 정상
             } catch (err) {
                 return false; // 서버가 비정상

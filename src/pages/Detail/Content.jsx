@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { API_BACKEND_URL } from "../../config";
 import useMovieDetail from "../../hooks/useMovieDetail";
 
 function Content() {
@@ -18,7 +19,7 @@ function Content() {
     }
 
     try {
-      const response = await fetch("http://localhost:8090/api/v1/movie/review/write", {
+      const response = await fetch("${API_BACKEND_URL}/api/v1/movie/review/write", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

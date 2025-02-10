@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_BACKEND_URL } from "../../config";
 import './LoginModal.css'; // 스타일 파일 import
 
 const LoginPage = ({ onClose }) => {
@@ -52,7 +53,7 @@ const LoginPage = ({ onClose }) => {
       console.log(isLogin ? '로그인 시도:' : '회원가입 시도:', { email, password });
       if(isLogin){
           try {
-              const response = await axios.post("http://localhost:8090/api/v1/member/login", {
+              const response = await axios.post("${API_BACKEND_URL}` + `/api/v1/member/login", {
                 email,
                 password,
               },{
@@ -75,7 +76,7 @@ const LoginPage = ({ onClose }) => {
             }
       }else {
         try {
-          const response = await axios.post("http://localhost:8090/api/v1/member/signup", {
+          const response = await axios.post("${API_BACKEND_URL}/api/v1/member/signup", {
             email,
             password,
           });

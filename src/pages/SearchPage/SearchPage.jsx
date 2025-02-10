@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import { API_BACKEND_URL } from "../../config";
 import './SearchPage.css';
 import axios from 'axios';
 
@@ -24,7 +25,7 @@ function GeneralSearch() {
       try {
       
         const response = await axios.get(
-          `${API_BASE_URL}` + '/api/v1/movie/search',
+          `${API_BACKEND_URL}/api/v1/movie/search`,
           { params: { word } } 
         );
         setData(response.data);
@@ -49,7 +50,7 @@ function GeneralSearch() {
     try {
     
       const response = await axios.get(
-        `${API_BASE_URL}` + `/api/v1/movie/search/${option}`,
+        `${API_BACKEND_URL}/api/v1/movie/search/${option}`,
         { params: { word } }
       );
       setData(response.data);
