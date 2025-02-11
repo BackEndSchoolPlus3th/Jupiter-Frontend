@@ -16,8 +16,8 @@ function MovieSection({ title, movies, loading, error }) {
                     <p>{error}</p>
                 ) : (
                     <ul className="contents-ul">
-                        {movies.map((movie) => (
-                            <li key={movie.id}>
+                        {movies.map((movie, index) => (
+                            <li key={`${movie.id}-${index}`}>
                                 <Link to={`/detail/${movie.id}`}>
                                     <img
                                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -40,6 +40,7 @@ function MainPage() {
     const [topRatedMovies, setRecommendedMovies] = useState([]);
     const [actionMovies, setActionMovies] = useState([]);
     const [comedyMovies, setComedyMovies] = useState([]);
+    const [animationMovies, setAnimationMovies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -70,11 +71,14 @@ function MainPage() {
                     const topRatedMovies = await axios.get('http://localhost:8090/api/v1/movie/top-rated');
                     setRecommendedMovies(topRatedMovies.data);
 
-                    const actionMovies = await axios.get('http://localhost:8090/api/v1/movie/genre/28'); // 액션 장르의 ID 28 사용
+                    const actionMovies = await axios.get('http://localhost:8090/api/v1/movie/genre/action');
                     setActionMovies(actionMovies.data);
 
-                    const comedyMovies = await axios.get('http://localhost:8090/api/v1/movie/genre/35'); // 로맨스 장르의 ID 10749 사용
+                    const comedyMovies = await axios.get('http://localhost:8090/api/v1/movie/genre/comedy');
                     setComedyMovies(comedyMovies.data);
+
+                    const animationMovies = await axios.get('http://localhost:8090/api/v1/movie/genre/animation');
+                    setAnimationMovies(animationMovies.data);
                 } else {
                     // 백엔드 꺼져 있을 때 로컬 데이터를 사용
                     setBoxOfficeMovies(localPopularMovies);
@@ -115,6 +119,9 @@ function MainPage() {
 
                 {/* 코미디 영화 섹션 */}
                 <MovieSection title="ComedyMovies" movies={comedyMovies} loading={loading} error={error} />
+
+                {/* 애니메이션 영화 섹션 */}
+                <MovieSection title="AnimationMovies" movies={animationMovies} loading={loading} error={error} />
             </div>
         </div>
     );
