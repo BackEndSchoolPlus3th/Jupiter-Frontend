@@ -19,8 +19,8 @@ function MovieSection({ title, movies, loading, error }) {
                     <p>{error}</p>
                 ) : (
                     <ul className="contents-ul">
-                        {movies.map((movie, index) => (
-                            <li key={`${movie.id}-${index}`}>
+                        {movies.map((movie) => (
+                            <li key={movie.id}>
                                 <Link to={`/detail/${movie.id}`}>
                                     <img
                                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
