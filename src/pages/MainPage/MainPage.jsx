@@ -49,21 +49,27 @@ function MainPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // ⭐ 새로고침 시 쿠키를 가져와 상태 유지
-    useEffect(() => {
-        const checkCookie = async () => {
-            try {
-                const res = await axios.get(`${API_BACKEND_URL}/api/v1/auth/check`, {
-                  withCredentials: true  // 쿠키 포함
-                });
-                console.log('로그인 성공, 쿠키 확인:', res.data);
-            } catch (err) {
-                console.log('비로그인 상태');
-//                 console.error('쿠키 확인 실패:', err);
-            }
-        };
-        checkCookie();
-    }, []);
+        // ⭐ 새로고침 시 쿠키를 가져와 상태 유지
+            useEffect(() => {
+                const checkCookie = async () => {
+                    try {
+                        const res = await axios.get(`${API_BACKEND_URL}/api/v1/auth/check`, {
+                        withCredentials: true  // 쿠키 포함
+                        });
+                        if(res.data === "쿠키가 없습니다.") {
+                            console.log('비로그인 상태');
+                            setIsLoggedIn(false);
+                        }else{
+                            setIsLoggedIn(true);
+                            console.log('로그인 성공, 쿠키 확인:', res.data);
+                        }
+                    } catch (err) {
+                        console.log('비로그인 상태');
+                        setIsLoggedIn(false);
+                    }
+                };
+                checkCookie();
+            }, []);
 
     // 로컬 데이터 설정
     const localPopularMovies = [
@@ -106,8 +112,10 @@ function MainPage() {
             try {
                 setLoading(true);
 
-                // 백엔드 요청 대신 로컬 데이터를 사용
-                if (true) {  // 백엔드가 꺼졌을 때 로컬 데이터를 사용할 수 있도록 조건 추가
+                // 백엔드 상태 확인: 헬스 체크로 서버가 동작하는지 확인
+                const backendAvailable = await checkBackendAvailability();
+
+                if (backendAvailable) {
                     const popularMovies = await axios.get(`${API_BACKEND_URL}/api/v1/movie/popular`);
                     setBoxOfficeMovies(popularMovies.data);
 
@@ -168,29 +176,8 @@ function MainPage() {
                 <MovieSection title="PopularMovies" movies={popularMovies} loading={loading} error={error} />
 
                 {/* 추천 영화 섹션 */}
-                <div className="box-recommend">
-                    <p className="contents-title">TopRatedMovies</p>
-                    <div className="contents-box">
-                        {loading ? (
-                            <p>로딩 중...</p>
-                        ) : error ? (
-                            <p>{error}</p>  // 에러 메시지 표시
-                        ) : (
-                            <ul className="contents-ul">
-                                {topRatedMovies.map((movie) => (
-                                    <li key={movie.id}>
-                                        <img
-                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                            alt={movie.title}
-                                            className="movie-poster"
-                                        />
-                                        {movie.title}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                </div>
+                <MovieSection title="TopRatedMovies" movies={topRatedMovies} loading={loading} error={error} />
+
                 {/* 좋아하는 키워드 영화 섹션 */}
                 <div className="box-recommend">
                     <p className="contents-title">당신의 취향을 찾아드릴게요!</p>
@@ -203,12 +190,14 @@ function MainPage() {
                             <ul className="contents-ul">
                                 {likeKeywordMovies.map((movie) => (
                                     <li key={movie.id}>
-                                        <img
-                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                            alt={movie.title}
-                                            className="movie-poster"
-                                        />
-                                        {movie.title}
+                                        <Link to={`/detail/${movie.id}`}>
+                                            <img
+                                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                                alt={movie.title}
+                                                className="movie-poster"
+                                            />
+                                            {movie.title}
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
@@ -228,12 +217,14 @@ function MainPage() {
                             <ul className="contents-ul">
                                 {likeGenreMovies.map((movie) => (
                                     <li key={movie.id}>
-                                        <img
-                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                            alt={movie.title}
-                                            className="movie-poster"
-                                        />
-                                        {movie.title}
+                                        <Link to={`/detail/${movie.id}`}>
+                                            <img
+                                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                                alt={movie.title}
+                                                className="movie-poster"
+                                            />
+                                            {movie.title}
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
@@ -253,12 +244,14 @@ function MainPage() {
                             <ul className="contents-ul">
                                 {likeGenreMovies_2nd.map((movie) => (
                                     <li key={movie.id}>
-                                        <img
-                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                            alt={movie.title}
-                                            className="movie-poster"
-                                        />
-                                        {movie.title}
+                                        <Link to={`/detail/${movie.id}`}>
+                                            <img
+                                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                                alt={movie.title}
+                                                className="movie-poster"
+                                            />
+                                            {movie.title}
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
