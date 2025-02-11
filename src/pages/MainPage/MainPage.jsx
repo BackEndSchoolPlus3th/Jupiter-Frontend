@@ -45,28 +45,33 @@ function MainPage() {
     const [likeKeywordMovies, setLikeKeywordMovies] = useState([]);
     const [likeGenreMovies, setLikeGenreMovies] = useState([]);
     const [likeGenreMovies_2nd, setLikeGenreMovies_2nd] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-        // ⭐ 새로고침 시 쿠키를 가져와 상태 유지
-            useEffect(() => {
-                const checkCookie = async () => {
-                    try {
-                        const res = await axios.get(`${API_BACKEND_URL}/api/v1/auth/check`, {
-                        withCredentials: true  // 쿠키 포함
-                        });
-                        if(res.data === "쿠키가 없습니다.") {
-                            console.log('비로그인 상태');
-                        }else{
-                            console.log('로그인 성공, 쿠키 확인:', res.data);
-                        }
-                    } catch (err) {
-                        console.log('비로그인 상태');
-                    }
-                };
-                checkCookie();
-            }, []);
+    // ⭐ 새로고침 시 쿠키를 가져와 상태 유지
+    useEffect(() => {
+        const checkCookie = async () => {
+            try {
+                const res = await axios.get(`${API_BACKEND_URL}/api/v1/auth/check`, {
+                withCredentials: true  // 쿠키 포함
+                });
+                if(res.data === "쿠키가 없습니다.") {
+                    console.log('비로그인 상태');
+                    setIsLoggedIn(false);
+                }else{
+                    setIsLoggedIn(true);
+                    console.log('로그인 성공, 쿠키 확인:', res.data);
+                }
+            } catch (err) {
+                console.log('쿠키 없음');
+                setIsLoggedIn(false);
+            }
+        };
+        checkCookie();
+    }, []);
+
 
     // 로컬 데이터 설정
     const localPopularMovies = [

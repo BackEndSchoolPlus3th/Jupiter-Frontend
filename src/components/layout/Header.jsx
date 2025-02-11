@@ -34,7 +34,7 @@ function Header() {
                         console.log('로그인 성공, 쿠키 확인:', res.data);
                     }
                 } catch (err) {
-                    console.log('비로그인 상태');
+                    console.log('쿠키 없음');
                     setIsLoggedIn(false);
                 }
             };
