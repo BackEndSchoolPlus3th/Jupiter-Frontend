@@ -26,12 +26,16 @@ function Header() {
                     const res = await axios.get(`${API_BACKEND_URL}/api/v1/auth/check`, {
                     withCredentials: true  // 쿠키 포함
                     });
-                    setIsLoggedIn(true);
-                    console.log('로그인 성공, 쿠키 확인:', res.data);
+                    if(res.data ==="쿠키가 없습니다.") {
+                        console.log('비로그인 상태');
+                        setIsLoggedIn(false);
+                    }else{
+                        setIsLoggedIn(true);
+                        console.log('로그인 성공, 쿠키 확인:', res.data);
+                    }
                 } catch (err) {
                     console.log('비로그인 상태');
                     setIsLoggedIn(false);
-    //                 console.error('쿠키 확인 실패:', err);
                 }
             };
             checkCookie();
