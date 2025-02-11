@@ -24,6 +24,7 @@
     position: relative;
     margin-bottom: 15px;
     margin-top: 30px;
+    font-family: '42dot Sans';
 }
 .movie-contents {
     gap:20px;
