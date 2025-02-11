@@ -41,7 +41,8 @@ function MovieSection({ title, movies, loading, error }) {
 function MainPage() {
     const [popularMovies, setBoxOfficeMovies] = useState([]);
     const [topRatedMovies, setRecommendedMovies] = useState([]);
-  
+
+    const [likeKeywordMovies, setLikeKeywordMovies] = useState([]);
     const [likeGenreMovies, setLikeGenreMovies] = useState([]);
     const [likeGenreMovies_2nd, setLikeGenreMovies_2nd] = useState([]);
 
@@ -113,6 +114,13 @@ function MainPage() {
                     const topRatedMovies = await axios.get(`${API_BACKEND_URL}/api/v1/movie/top-rated`);
                     setRecommendedMovies(topRatedMovies.data);
 
+                    // 좋아하는 키워드의 영화
+                    const likeKeywordMovies = await axios.get(`${API_BACKEND_URL}/api/v1/movie/likes_keyword`, {
+                        withCredentials: true
+                    });
+                    setLikeKeywordMovies(likeKeywordMovies.data);
+
+
                     // 좋아하는 첫 번째 장르의 영화
                     const likeGenreMovies = await axios.get(`${API_BACKEND_URL}/api/v1/movie/likes`, {
                         withCredentials: true
@@ -128,6 +136,7 @@ function MainPage() {
                     // 백엔드 꺼져 있을 때 로컬 데이터를 사용
                     setBoxOfficeMovies(localPopularMovies);
                     setRecommendedMovies(localTopRatedMovies);
+                    setLikeKeywordMovies(localLikeGenreMovies);
                     setLikeGenreMovies(localLikeGenreMovies);
                     setLikeGenreMovies_2nd(localLikeGenreMovies);
                 }
@@ -182,6 +191,30 @@ function MainPage() {
                         )}
                     </div>
                 </div>
+                {/* 좋아하는 키워드 영화 섹션 */}
+                <div className="box-recommend">
+                    <p className="contents-title">당신의 취향을 찾아드릴게요!</p>
+                    <div className="contents-box">
+                        {loading ? (
+                            <p>로딩 중...</p>
+                        ) : error ? (
+                            <p>{error}</p>  // 에러 메시지 표시
+                        ) : (
+                            <ul className="contents-ul">
+                                {likeKeywordMovies.map((movie) => (
+                                    <li key={movie.id}>
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                            alt={movie.title}
+                                            className="movie-poster"
+                                        />
+                                        {movie.title}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                </div>
 
                 {/* 좋아하는 장르 영화 섹션 */}
                 <div className="box-recommend">
@@ -210,7 +243,7 @@ function MainPage() {
 
                 {/* 두 번째로 좋아하는 장르 영화 섹션 */}
                 <div className="box-recommend">
-                    <p className="contents-title">당신이 꽤 좋아하는 장르 영화</p>
+                    <p className="contents-title">당신이 정말 좋아하는 장르 영화</p>
                     <div className="contents-box">
                         {loading ? (
                             <p>로딩 중...</p>
