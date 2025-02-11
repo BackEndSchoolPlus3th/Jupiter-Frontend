@@ -1,9 +1,29 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+@import url('https://fonts.googleapis.com/css2?family=42dot+Sans:wght@300..800&family=Gowun+Batang&family=Grandiflora+One&display=swap');
+
 @font-face {
     font-family: 'EF_jejudoldam';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
+}
+
+@font-face {
+  font-family: "Grandiflora One", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gowun Batang", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "42dot Sans", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 html, body {
@@ -48,6 +68,7 @@ button {
     display: flex;
     padding: 0 20px;
     width: 100%;
+    justify-content: center;
 }
 
 .nav-li {
@@ -86,17 +107,19 @@ li {
 
 
 .search.search-div {
+    width: 100%;
+    display: flex;
+    margin-left: 30px;
     flex-shrink: 1;
-    margin: 0 0 0 auto;
+    margin: 0;
     transition: all .5s;
 }
 .search-box {
-    width: 300px;
+    width: 500px;
     position: relative;
     padding: 0 10px;
 }
 .search-label {
-    background-color: #eeeeee;
     border-radius: 2px;
     align-items: center;
     height: 38px;
@@ -123,12 +146,23 @@ form {
 }
 
 .logo{
-    font-family: 'EF_jejudoldam';
+    font-family: 'Grandiflora One';
     font-size: 36px;
     padding: 10px 20px;
     color:#1c1c1c;
+    margin-bottom: 5px;
 }
 
+.home{
+    font-family: 'Gowun Batang';
+    font-size: 14px;
+    color:#1c1c1c;
+}
+.rate {
+    width: 80px;
+    display: flex;
+    text-align: center;
+}
 span {
     font-size: 14px;
     font-weight: 400;

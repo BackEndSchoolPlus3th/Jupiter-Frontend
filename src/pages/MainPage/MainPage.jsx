@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './MainPage.css';
+import "../../index.css";
 import { Link } from 'react-router-dom';
 import { API_BACKEND_URL } from "../../config";
 

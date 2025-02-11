@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { API_BACKEND_URL } from "../../config";
 import './LoginModal.css'; // 스타일 파일 import
+import "../../index.css";
 
 const LoginPage = ({ onClose }) => {
   const [isLogin, setIsLogin] = useState(true); // 로그인 상태를 관리
@@ -109,7 +110,6 @@ const LoginPage = ({ onClose }) => {
       <div className="login-page" onClick={(e) => e.stopPropagation()}>
         <div className="login-box">
           <div className="logo">우주라이크</div>
-          <h1>{isLogin ? '로그인' : '회원가입'}</h1>
           <form className="space-y-4">
             <div>
               <input
@@ -149,7 +149,7 @@ const LoginPage = ({ onClose }) => {
               </div>
             )}
 
-            <button type="button" onClick={handleSubmit}>{isLogin ? '로그인' : '회원가입'}</button>
+            <button type="button" onClick={handleSubmit} className="btn btn-primary">{isLogin ? '로그인' : '회원가입'}</button>
 
           </form>
 

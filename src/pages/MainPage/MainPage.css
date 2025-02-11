@@ -8,7 +8,7 @@
 /* 콘텐츠를 담고 있는 영역 */
 .contents-div {
     width: 100%;
-    padding: 0 0 30px 30px;
+    padding: 0;
     box-sizing: border-box;
     overflow: auto;
 }
