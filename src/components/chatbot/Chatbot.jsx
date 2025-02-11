@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Client } from '@stomp/stompjs';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 import SockJS from 'sockjs-client';
 import axios from 'axios';
 import './Chatbot.css';
