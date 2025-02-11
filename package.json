@@ -16,7 +16,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.5",
-    "sockjs-client": "^1.6.1"
+    "sockjs-client": "^1.6.1",
+    "vercel": "^41.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
