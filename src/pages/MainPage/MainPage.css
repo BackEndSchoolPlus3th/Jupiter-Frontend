@@ -23,6 +23,9 @@
     position: relative;
     margin-bottom: 15px;
 }
+.movie-contents {
+    gap:20px;
+}
 
 /* 영화 목록을 감싸는 박스 스타일 */
 .contents-box {
