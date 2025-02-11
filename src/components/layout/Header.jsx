@@ -113,7 +113,16 @@ function Header() {
                                 </form>
                             </div>
                         </li>
-                        <li className="rate nav-li"><a className="nav-button" href="/ko-KR"><span className="text-bold text-primary">계정 변경</span></a></li>
+                        <li className="rate nav-li">
+                            <div className="dropdown dropdown-bottom dropdown-end">
+                              <div tabIndex={0} role="button" className="text-bold text-primary">계정 변경</div>
+                              <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box absolute left-0 z-[1] w-52 p-2 shadow">
+                                <li><a>김공포</a></li>
+                                <li><a>이가족</a></li>
+                                <li><a>최모험</a></li>
+                              </ul>
+                            </div>
+                        </li>
                         <li className="myPage nav-li">
                             {/* 🔥 로그인 상태에 따라 버튼 변경 */}
                             {isLoggedIn ? (

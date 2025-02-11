@@ -54,7 +54,7 @@ function Slider({ movies }) {
                             <img
                                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                                 alt={movie.title}
-                                className="movie-poster rounded-lg shadow-lg transition-transform hover:scale-105"
+                                className="movie-poster rounded-md shadow-lg transition-transform hover:scale-105"
                             />
                         <p className="text-center mt-2 ellipsis movie-text">{movie.title}</p>
                         </Link>
@@ -231,6 +231,9 @@ function MainPage() {
     return (
         <div className="contents">
             <div className="contents-div">
+                <div className="rounded-md py-4">
+                    <img src="../../dist/assets/wyl-banner-DBSqDFSV.jpg"></img>
+                </div>
 {/*                  */}{/* 인기 영화 섹션 */}
 {/*                 <MovieSection title="PopularMovies" movies={popularMovies} loading={loading} error={error} /> */}
 
