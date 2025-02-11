@@ -42,6 +42,7 @@ header {
     background-color: var(--color-background);
     box-shadow: 0 1px #00000014;
     z-index: 999;
+    font-family: '42dot sans';
 }
 
 .header {
@@ -167,10 +168,19 @@ form {
     color:#1c1c1c;
 }
 .rate {
-    width: 80px;
+    width: 150px;
     display: flex;
-    text-align: center;
+    justify-content: end;
+    z-index: 999;
+    padding-right: 10px;
 }
+.member-list {
+    width: 120px;
+    display: flex;
+    justify-content: end;
+    z-index: 999;
+}
+
 span {
     font-size: 14px;
     font-weight: 400;

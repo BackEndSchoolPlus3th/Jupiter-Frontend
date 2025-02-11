@@ -115,8 +115,8 @@ function Header() {
                         </li>
                         <li className="rate nav-li">
                             <div className="dropdown dropdown-bottom dropdown-end">
-                              <div tabIndex={0} role="button" className="text-bold text-primary">계정 변경</div>
-                              <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box absolute left-0 z-[1] w-52 p-2 shadow">
+                              <div tabIndex={0} role="button" className="text-bold text-primary member-list">계정 변경</div>
+                              <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box absolute left-0 z-[1] w-52 shadow">
                                 <li><a>김공포</a></li>
                                 <li><a>이가족</a></li>
                                 <li><a>최모험</a></li>
