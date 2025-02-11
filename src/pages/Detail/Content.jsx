@@ -3,8 +3,28 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API_BACKEND_URL } from "../../config";
 import useMovieDetail from "../../hooks/useMovieDetail";
+import useAuthHook from "../../hooks/useAuthHook";
+import { getProfile, login as apiLogin, logout as apiLogout } from "../../services/auth";
 
 function Content() {
+  const [user, setUser] = useState(null);
+  // 페이지 로드 시 자동 로그인 확인
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const userData = await getProfile();
+        setUser(userData);
+      } catch {
+        setUser(null); // 인증 실패 시 null
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkLogin();
+  }, []);
+
+  // console.log(user.data.email);
+
   const [comment, setComment] = useState(""); // 입력된 값 저장
   const [starPoint, setStarPoint] = useState(0); // 별점 상태 추가
 
@@ -13,32 +33,72 @@ function Content() {
   };
 
   const handleSubmit = async () => {
-    if (!comment.trim()) {
-      alert("내용을 입력하세요!");
-      return;
-    }
+    if (user) {
 
-    try {
-      const response = await fetch(`${API_BACKEND_URL}/api/v1/movie/review/write`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ reviewContent: comment, movie: id, userId: 1, rating: starPoint }),
-        credentials: "include",
-      });
+      if (!memberReview) {
 
-      if (response.ok) {
-        alert("리뷰가 성공적으로 저장되었습니다!");
-        setComment(""); // 입력 필드 초기화
+        if (!comment.trim()) {
+          alert("내용을 입력하세요!");
+          return;
+        }
+  
+        try {
+          const response = await fetch(`${API_BACKEND_URL}/api/v1/movie/review/write`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ reviewContent: comment, movie: id, user: user.data.email, rating: starPoint }),
+            credentials: "include",
+          });
+  
+          if (response.ok) {
+            alert("리뷰가 성공적으로 저장되었습니다!");
+            setComment(""); // 입력 필드 초기화
+          } else {
+            alert("저장 실패");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("오류가 발생했습니다.");
+        }
       } else {
-        alert("저장 실패");
+        alert('수정')
+        response = await fetch(`${API_BACKEND_URL}/api/v1/movie/review/update/${memberReview.reviewId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(reviewData),
+          credentials: "include",
+        });
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("오류가 발생했습니다.");
+
+    } else {
+      alert("로그인 후 이용해주세요!");
     }
+
   };
+
+  const [memberReview, setMemberReview] = useState(null);
+
+  useEffect(() => {
+    const fetchMovieReviewResponse = async () => {
+      if (!user) {
+        return;
+      }
+
+      try {
+        const userEmail = user.data.email;
+        const movieReviewResponse = await axios.get(`${API_BACKEND_URL}/api/v1/movie/review/${userEmail}/${id}`);
+        setMemberReview(movieReviewResponse.data);
+      } catch (error) {
+        console.error("Error fetching review data:", error);
+      }
+    };
+
+    fetchMovieReviewResponse();
+  }, [user]);
 
   const { id } = useParams(); // URL에서 영화 ID 가져오기
   const { movieDetail, videoKey } = useMovieDetail(id); // 받아온 id를 hook에 전달
@@ -80,61 +140,100 @@ function Content() {
       reviewTextCount.innerText = `0 / 10000`;
     });
 
-    const starRating = document.querySelectorAll('.star-rating')
-    const starRating1 = document.querySelector('.star-rating1')
-    const starRating2 = document.querySelector('.star-rating2')
-    const starRating3 = document.querySelector('.star-rating3')
-    const starRating4 = document.querySelector('.star-rating4')
-    const starRating5 = document.querySelector('.star-rating5')
+    const starRating = document.querySelectorAll(".star-rating");
+    const starRating1 = document.querySelector(".star-rating1");
+    const starRating2 = document.querySelector(".star-rating2");
+    const starRating3 = document.querySelector(".star-rating3");
+    const starRating4 = document.querySelector(".star-rating4");
+    const starRating5 = document.querySelector(".star-rating5");
 
-    let starPoint = 0
+    let starPoint = 0;
 
     starRating.forEach((star) => {
-      star.addEventListener('click', (e) => {
+      star.addEventListener("click", (e) => {
         // console.log(e.target.parentNode)
         // console.log(starRating1)
         // e.target.parentNode.style = "color: red"
         // e.target.parentNode.previousSibling.style = "color: red"
         if (e.target.parentNode === starRating1) {
           setStarPoint(1);
-          starRating1.style = "color: red"
-          starRating2.style = "color: black"
-          starRating3.style = "color: black"
-          starRating4.style = "color: black"
-          starRating5.style = "color: black"
+          starRating1.style = "color: red";
+          starRating2.style = "color: black";
+          starRating3.style = "color: black";
+          starRating4.style = "color: black";
+          starRating5.style = "color: black";
         } else if (e.target.parentNode === starRating2) {
           setStarPoint(2);
-          starRating1.style = "color: red"
-          starRating2.style = "color: red"
-          starRating3.style = "color: black"
-          starRating4.style = "color: black"
-          starRating5.style = "color: black"
+          starRating1.style = "color: red";
+          starRating2.style = "color: red";
+          starRating3.style = "color: black";
+          starRating4.style = "color: black";
+          starRating5.style = "color: black";
         } else if (e.target.parentNode === starRating3) {
           setStarPoint(3);
-          starRating1.style = "color: red"
-          starRating2.style = "color: red"
-          starRating3.style = "color: red"
-          starRating4.style = "color: black"
-          starRating5.style = "color: black"
+          starRating1.style = "color: red";
+          starRating2.style = "color: red";
+          starRating3.style = "color: red";
+          starRating4.style = "color: black";
+          starRating5.style = "color: black";
         } else if (e.target.parentNode === starRating4) {
           setStarPoint(4);
-          starRating1.style = "color: red"
-          starRating2.style = "color: red"
-          starRating3.style = "color: red"
-          starRating4.style = "color: red"
-          starRating5.style = "color: black"
+          starRating1.style = "color: red";
+          starRating2.style = "color: red";
+          starRating3.style = "color: red";
+          starRating4.style = "color: red";
+          starRating5.style = "color: black";
         } else if (e.target.parentNode === starRating5) {
           setStarPoint(5);
-          starRating1.style = "color: red"
-          starRating2.style = "color: red"
-          starRating3.style = "color: red"
-          starRating4.style = "color: red"
-          starRating5.style = "color: red"
+          starRating1.style = "color: red";
+          starRating2.style = "color: red";
+          starRating3.style = "color: red";
+          starRating4.style = "color: red";
+          starRating5.style = "color: red";
         }
+      });
+    });
+    if (memberReview) {
+      console.log(memberReview);
 
-      })
-    })
-
+      if (memberReview.rating === 1) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: black";
+        starRating3.style = "color: black";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 2) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: black";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 3) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: red";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 4) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: red";
+        starRating4.style = "color: red";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 5) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: red";
+        starRating4.style = "color: red";
+        starRating5.style = "color: red";
+      } else if (memberReview.rating === 0) {
+        starRating1.style = "color: black";
+        starRating2.style = "color: black";
+        starRating3.style = "color: black";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      }
+    }
   });
 
   return (
@@ -153,12 +252,7 @@ function Content() {
               <div className="estimate-star">
                 <div className="star-images">
                   <div className="star-images-container" data-select="content-rating-stars">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="star-rating star-rating1"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="star-rating star-rating1">
                       <path
                         fill="currentColor"
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
@@ -170,34 +264,19 @@ function Content() {
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
                       ></path>
                     </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="star-rating star-rating3"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="star-rating star-rating3">
                       <path
                         fill="currentColor"
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
                       ></path>
                     </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="star-rating star-rating4"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="star-rating star-rating4">
                       <path
                         fill="currentColor"
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
                       ></path>
                     </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="star-rating star-rating5"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="star-rating star-rating5">
                       <path
                         fill="currentColor"
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
@@ -296,7 +375,13 @@ function Content() {
                       clipRule="evenodd"
                     ></path>
                   </svg> */}
-                  <svg xmlns="http://www.w3.org/2000/svg" style={{ width: "48", height: "48" }} fill="none" viewBox="0 0 24 24" className="bookmark-btn">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{ width: "48", height: "48" }}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    className="bookmark-btn"
+                  >
                     <rect width="4" height="11" x="2" y="10" fill="currentColor" rx="0.75"></rect>
                     <path
                       fill="currentColor"
@@ -466,6 +551,7 @@ function Content() {
               </div>
             </section>
             <section className="content-summary">
+              {memberReview && <div>{memberReview?.reviewContent}</div>}
               <p className="summary-text">{movieDetail?.overview}</p>
             </section>
           </div>
