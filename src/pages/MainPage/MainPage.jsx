@@ -222,11 +222,25 @@ function MainPage() {
     return (
         <div className="contents">
             <div className="contents-div">
-                {/* 인기 영화 섹션 */}
-                <MovieSection title="PopularMovies" movies={popularMovies} loading={loading} error={error} />
+{/*                  */}{/* 인기 영화 섹션 */}
+{/*                 <MovieSection title="PopularMovies" movies={popularMovies} loading={loading} error={error} /> */}
 
-                {/* 추천 영화 섹션 */}
-                <MovieSection title="TopRatedMovies" movies={topRatedMovies} loading={loading} error={error} />
+{/*                  */}{/* 추천 영화 섹션 */}
+{/*                 <MovieSection title="TopRatedMovies" movies={topRatedMovies} loading={loading} error={error} /> */}
+
+               {/* 인기 영화 섹션 */}
+               <div className="box-recommend">
+                   <p className="contents-title">요즘 최고 인기!</p>
+                   <div className="contents-box">
+                       {loading ? (
+                           <p className="loading loading-ring loading-lg">로딩 중...</p>
+                       ) : error ? (
+                           <p>{error}</p>  // 에러 메시지 표시
+                       ) : (
+                           <Slider movies={popularMovies} />
+                       )}
+                   </div>
+               </div>
 
                {/* 좋아하는 키워드 영화 섹션 */}
                <div className="box-recommend">
@@ -241,6 +255,20 @@ function MainPage() {
                        )}
                    </div>
                </div>
+
+              {/* 고평가 영화 섹션 */}
+              <div className="box-recommend">
+                  <p className="contents-title">평점이 높은 영화!</p>
+                  <div className="contents-box">
+                      {loading ? (
+                          <p className="loading loading-ring loading-lg">로딩 중...</p>
+                      ) : error ? (
+                          <p>{error}</p>  // 에러 메시지 표시
+                      ) : (
+                          <Slider movies={topRatedMovies} />
+                      )}
+                  </div>
+              </div>
 
                {/* 좋아하는 장르 영화 섹션 */}
                <div className="box-recommend">

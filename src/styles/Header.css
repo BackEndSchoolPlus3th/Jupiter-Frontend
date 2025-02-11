@@ -153,6 +153,14 @@ form {
     margin-bottom: 5px;
 }
 
+.logo-foot {
+    font-family: 'Grandiflora One';
+    font-size: 24px;
+    padding: 10px 20px;
+    color:#1c1c1c;
+    margin-bottom: 5px;
+}
+
 .home{
     font-family: 'Gowun Batang';
     font-size: 14px;
