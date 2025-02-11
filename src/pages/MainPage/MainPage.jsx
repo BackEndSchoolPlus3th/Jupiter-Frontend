@@ -54,12 +54,12 @@ function MainPage() {
         const checkCookie = async () => {
             try {
                 const res = await axios.get(`${API_BACKEND_URL}/api/v1/auth/check`, {
-                    withCredentials: true  // 쿠키 포함
+                  withCredentials: true  // 쿠키 포함
                 });
                 console.log('로그인 성공, 쿠키 확인:', res.data);
             } catch (err) {
                 console.log('비로그인 상태');
-                //                 console.error('쿠키 확인 실패:', err);
+//                 console.error('쿠키 확인 실패:', err);
             }
         };
         checkCookie();
@@ -77,7 +77,7 @@ function MainPage() {
         { id: 8 },
         { id: 9 },
     ];
-
+  
     const localTopRatedMovies = [
         { id: 1 },
         { id: 2 },

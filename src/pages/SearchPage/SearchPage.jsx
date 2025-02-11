@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
+import { API_BACKEND_URL } from "../../config";
 import './SearchPage.css';
-import axios from 'axios'; // 1. Axios 대소문자 수정
+import axios from 'axios';
 
 function GeneralSearch() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const word = searchParams.get('word'); // 2. 훅 순서 변경
+  const word = searchParams.get('word');
 
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // 3. 검색어 유효성 검사 추가
+    
     if (!word) {
       setError('검색어가 없습니다');
       setIsLoading(false);
@@ -22,14 +23,14 @@ function GeneralSearch() {
 
     const fetchData = async () => {
       try {
-        // 4. API 엔드포인트 수정
+      
         const response = await axios.get(
-          'http://localhost:8090/api/v1/movie/search',
-          { params: { word } } // 5. 올바른 파라미터 전달
+          `${API_BACKEND_URL}/api/v1/movie/search`,
+          { params: { word } } 
         );
         setData(response.data);
       } catch (error) {
-        // 6. 에러 처리 강화
+    
         console.error('검색 오류:', error);
         setError(error.message);
       } finally {
@@ -38,21 +39,48 @@ function GeneralSearch() {
     };
 
     fetchData();
-  }, [word]); // 7. word 의존성 추가
+  }, [word]);
+  const handleSelectChange = (e) => {
+   
+    submitOrderByLatest(e.target.value);
+  }
+ 
 
-  // 8. 조건부 렌더링 위치 수정
+  const submitOrderByLatest = async (option) =>{
+    try {
+    
+      const response = await axios.get(
+        `${API_BACKEND_URL}/api/v1/movie/search/${option}`,
+        { params: { word } }
+      );
+      setData(response.data);
+    } catch (error) {
+     
+      console.error('검색 오류:', error);
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="wrap">
       <div className="main_text0" id="link_main_text0">
-        <div style={{ marginLeft: '45px', width: '100px', fontSize: '20px', color: 'black' }}>
-          영화
+        <div style={{ marginLeft: '45px', width: '95%', fontSize: '20px', color: 'black',display: 'flex',justifyContent: 'space-between' }}>
+          <div>영화</div>
+        <div>
+          <select onChange={handleSelectChange}>
+            <option value="latest">최신순</option>
+            <option value="popular">인기순</option>
+          </select></div> 
         </div>
         <ul className="icons">
-          {data.map((item) => (
-            <li key={item.id} className="icon"> 
+          {data.map((item) => (          
+            <li key={item.id} className="icon">
+              <Link to={`/detail/${item.id}`} key={item.id}>
               <div className="icon_img">
             {item.poster_path==null ? <div></div> : 
               <img
@@ -68,7 +96,7 @@ function GeneralSearch() {
               <div className="contents2">
                 {item.release_date?.substring(0, 4)} ・{' '}
                 {item.original_country}
-              </div>
+              </div></Link>
             </li>
           ))}
         </ul>

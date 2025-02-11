@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { API_BACKEND_URL } from "../../config";
 import './LoginModal.css'; // 스타일 파일 import
 
 const LoginPage = ({ onClose }) => {
@@ -45,10 +47,56 @@ const LoginPage = ({ onClose }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!emailError && !passwordError && (!isLogin && !confirmPasswordError)) {
+    if (!emailError && !passwordError && !confirmPasswordError) {
       console.log(isLogin ? '로그인 시도:' : '회원가입 시도:', { email, password });
+      if(isLogin){
+          try {
+              const response = await axios.post(`${API_BACKEND_URL}/api/v1/member/login`, {
+                email,
+                password,
+              },{
+                 withCredentials: true  // 요청에 쿠키 포함
+              });
+
+              console.log("로그인 성공:", response.data);
+
+              if (response.data.token) {
+                localStorage.setItem("token", response.data.token);
+              }
+
+              alert("로그인 성공!");
+              onClose();
+              window.location.reload(); // 새로고침
+
+            } catch (error) {
+              console.error("로그인 실패:", error.response?.data || error.message);
+              alert("로그인 실패! 다시 시도해주세요.");
+            }
+      }else {
+        try {
+          const response = await axios.post(`${API_BACKEND_URL}/api/v1/member/signup`, {
+            email,
+            password,
+          });
+
+          console.log("회원가입 성공:", response.data);
+
+          if (response.data.token) {
+            localStorage.setItem("token", response.data.token);
+          }
+
+          alert("회원가입 성공!");
+          onClose();
+          window.location.reload(); // 새로고침
+
+        } catch (error) {
+          console.error("회원가입 실패:", error.response?.data || error.message);
+          alert("회원가입 실패! 다시 시도해주세요.");
+        }
+      }
+
     }
   };
 
@@ -62,7 +110,7 @@ const LoginPage = ({ onClose }) => {
         <div className="login-box">
           <div className="logo">우주라이크</div>
           <h1>{isLogin ? '로그인' : '회원가입'}</h1>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form className="space-y-4">
             <div>
               <input
                 type="email"
@@ -101,12 +149,13 @@ const LoginPage = ({ onClose }) => {
               </div>
             )}
 
-            <button type="submit">{isLogin ? '로그인' : '회원가입'}</button>
+            <button type="button" onClick={handleSubmit}>{isLogin ? '로그인' : '회원가입'}</button>
+
+          </form>
 
             <a className="signup-link" onClick={toggleForm}>
               {isLogin ? '회원가입' : '로그인'}
             </a>
-          </form>
         </div>
       </div>
     </div>
