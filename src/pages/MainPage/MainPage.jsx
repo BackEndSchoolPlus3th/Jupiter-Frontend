@@ -15,7 +15,16 @@ function Slider({ movies }) {
     // 자동 슬라이드 기능 추가
     useEffect(() => {
         const intervalId = setInterval(() => {
-            scrollRight();
+            if (sliderRef.current) {
+                const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+                if (scrollLeft + clientWidth >= scrollWidth - 1) {
+                    // 맨 끝에 도달하면 왼쪽 끝으로 이동
+                    sliderRef.current.scrollTo({ left: 0, behavior: "smooth" });
+                } else {
+                    // 일반적인 슬라이드 이동
+                    scrollRight();
+                }
+            }
         }, 3000); // 3초마다 자동 슬라이드
 
         return () => clearInterval(intervalId); // 컴포넌트가 unmount될 때 interval 제거
