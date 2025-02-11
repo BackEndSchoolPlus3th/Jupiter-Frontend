@@ -157,7 +157,7 @@ function Chatbot() {
                 </div>
                 <div className="chatbot-content" ref={chatbotContentRef}>
                     {messages.map((msg, index) => (
-                        <div key={index} className={`message ${msg.sender}`}>
+                        <div key={index} className={`message ${msg.sender==='bot'? 'bot chat-bubble chat-bubble-primary' : 'user'}`}>
                             {formatMessage(msg.message)}  {/* HTML로 변환된 메시지 출력 */}
                         </div>
                     ))}

@@ -29,6 +29,14 @@
 .movie-contents {
     gap:20px;
 }
+.movie-text {
+    font-family: '42dot Sans';
+    font-size: 14px;
+    width:200px;
+    white-space: nowrap;        /* 텍스트를 한 줄로 표시 */
+    overflow: hidden;           /* 텍스트가 넘칠 경우 숨김 처리 */
+    text-overflow:ellipsis;
+}
 
 /* 영화 목록을 감싸는 박스 스타일 */
 .contents-box {

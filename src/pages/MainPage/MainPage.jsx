@@ -47,7 +47,7 @@ function Slider({ movies }) {
                                 alt={movie.title}
                                 className="movie-poster rounded-lg shadow-lg transition-transform hover:scale-105"
                             />
-{/*                             <p className="text-center mt-2">{movie.title}</p> */}
+                        <p className="text-center mt-2 ellipsis movie-text">{movie.title}</p>
                         </Link>
                     </div>
                 ))}
