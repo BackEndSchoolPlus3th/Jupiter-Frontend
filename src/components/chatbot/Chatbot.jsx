@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Client } from '@stomp/stompjs';
+import jwt_decode from 'jwt-decode';
 import SockJS from 'sockjs-client';
 import axios from 'axios';
 import './Chatbot.css';
@@ -8,11 +9,24 @@ import { API_BACKEND_URL } from '../../config';
 function Chatbot() {
     const [isChatbotOpen, setIsChatbotOpen] = useState(false);
     const [messages, setMessages] = useState([]);
-    const [userId, setUserId] = useState('user1');
+    const [userId, setUserId] = useState(null);
     const [userMessage, setUserMessage] = useState('');
     const chatbotContentRef = useRef(null);
     const chatbotInputRef = useRef(null);
     const stompClientRef = useRef(null);
+    
+    useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            try {
+                const decodedToken = jwt_decode(accessToken);  // 토큰 디코딩
+                const id = decodedToken.id;
+                setUserId(id);  // userId를 상태로 설정
+            } catch (error) {
+                console.error('토큰 디코딩 실패:', error);
+            }
+        }
+    }, []);
 
     // 챗봇 열기/닫기
     const toggleChatbot = () => {
@@ -103,6 +117,8 @@ function Chatbot() {
     };
 
     const fetchPreviousMessages = async () => {
+        if (!userId) return;
+
         try {
             // const response = await axios.get('http://localhost:8090/api/v1/chat/previousMessages', {
             const response = await axios.get(`${API_BACKEND_URL}/api/v1/chat/previousMessages`, {
