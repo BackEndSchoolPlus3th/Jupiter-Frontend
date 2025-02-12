@@ -3,8 +3,35 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API_BACKEND_URL } from "../../config";
 import useMovieDetail from "../../hooks/useMovieDetail";
+import useAuthHook from "../../hooks/useAuthHook";
+import { getProfile, login as apiLogin, logout as apiLogout } from "../../services/auth";
 
 function Content() {
+  const { id } = useParams(); // URL에서 영화 ID 가져오기
+  const { movieDetail, videoKey } = useMovieDetail(id); // 받아온 id를 hook에 전달
+
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // 초기 로딩 상태
+
+  // 페이지 로드 시 자동 로그인 확인
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const userData = await getProfile();
+        setUser(userData);
+        fetchMovieReviewResponse();
+        console.log("check login");
+      } catch {
+        setUser(null); // 인증 실패 시 null
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkLogin();
+  }, []);
+
+  // console.log(user.data.email);
+
   const [comment, setComment] = useState(""); // 입력된 값 저장
   const [starPoint, setStarPoint] = useState(0); // 별점 상태 추가
 
@@ -13,41 +40,103 @@ function Content() {
   };
 
   const handleSubmit = async () => {
-    if (!comment.trim()) {
-      alert("내용을 입력하세요!");
+    if (user) {
+      if (!memberReview) {
+        if (!comment.trim()) {
+          alert("내용을 입력하세요!");
+          return;
+        }
+
+        try {
+          const response = await fetch(`${API_BACKEND_URL}/api/v1/movie/review/write`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ reviewContent: comment, movie: id, user: user.data.email, rating: starPoint }),
+            credentials: "include",
+          });
+
+          if (response.ok) {
+            alert("리뷰가 성공적으로 저장되었습니다!");
+            setComment(""); // 입력 필드 초기화
+            fetchMovieReviewResponse();
+          } else {
+            alert("저장 실패");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("오류가 발생했습니다.");
+        }
+      } else {
+        alert("수정");
+        const reviewId = memberReview.id;
+        console.log("reviewId:", reviewId);
+        const updateReview = await fetch(`${API_BACKEND_URL}/api/v1/movie/review/update/${reviewId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ reviewContent: comment, rating: starPoint }),
+          credentials: "include",
+        });
+        console.log(updateReview);
+
+        if (updateReview.ok) {
+          const myReview = document.querySelector(".my-review");
+          alert("리뷰가 성공적으로 수정되었습니다!");
+          setComment(""); // 입력 필드 초기화
+          fetchMovieReviewResponse();
+          myReview.innerText = memberReview.reviewContent;
+        } else {
+          alert("수정 실패");
+        }
+      }
+    } else {
+      alert("로그인 후 이용해주세요!");
+    }
+  };
+
+  const [memberReview, setMemberReview] = useState();
+
+  // const [memberReview, setMemberReview] = useState(() => {
+  //   const savedMemberReview = localStorage.getItem("memberReview");
+  //   return savedMemberReview ? JSON.parse(savedMemberReview) : null;
+  // });
+
+  // useEffect(() => {
+  //   // 로컬 스토리지에 movie 데이터를 저장
+  //   if (memberReview) {
+  //     localStorage.setItem("memberReview", JSON.stringify(memberReview));
+  //   }
+  // }, [memberReview]);
+
+  const fetchMovieReviewResponse = async () => {
+    if (!user) {
       return;
     }
 
     try {
-      const response = await fetch(`${API_BACKEND_URL}/api/v1/movie/review/write`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ reviewContent: comment, movie: id, userId: 1, rating: starPoint }),
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        alert("리뷰가 성공적으로 저장되었습니다!");
-        setComment(""); // 입력 필드 초기화
-      } else {
-        alert("저장 실패");
-      }
+      const userEmail = user.data.email;
+      const movieReviewResponse = await axios.get(`${API_BACKEND_URL}/api/v1/movie/review/${userEmail}/${id}`);
+      setMemberReview(movieReviewResponse.data);
+      console.log("fetchMovieReview");
     } catch (error) {
-      console.error("Error:", error);
-      alert("오류가 발생했습니다.");
+      console.error("Error fetching review data:", error);
     }
   };
 
-  const { id } = useParams(); // URL에서 영화 ID 가져오기
-  const { movieDetail, videoKey } = useMovieDetail(id); // 받아온 id를 hook에 전달
+  useEffect(() => {
+    fetchMovieReviewResponse();
+  }, [status]);
 
   useEffect(() => {
     const review = document.querySelector(".acting-comment");
     const modal = document.querySelector(".review-modal-container");
     const modalOff = document.querySelector(".review-modal-close");
     const modalWrap = document.querySelector(".review-modal-wrap");
+
+    console.log("star rank");
 
     // 작성버튼 눌렀을 때 모달창 on
     review.addEventListener("click", () => {
@@ -80,62 +169,152 @@ function Content() {
       reviewTextCount.innerText = `0 / 10000`;
     });
 
-    const starRating = document.querySelectorAll('.star-rating')
-    const starRating1 = document.querySelector('.star-rating1')
-    const starRating2 = document.querySelector('.star-rating2')
-    const starRating3 = document.querySelector('.star-rating3')
-    const starRating4 = document.querySelector('.star-rating4')
-    const starRating5 = document.querySelector('.star-rating5')
+    const starRating = document.querySelectorAll(".star-rating");
+    const starRating1 = document.querySelector(".star-rating1");
+    const starRating2 = document.querySelector(".star-rating2");
+    const starRating3 = document.querySelector(".star-rating3");
+    const starRating4 = document.querySelector(".star-rating4");
+    const starRating5 = document.querySelector(".star-rating5");
 
-    let starPoint = 0
+    let starPoint = 0;
 
     starRating.forEach((star) => {
-      star.addEventListener('click', (e) => {
+      star.addEventListener("click", (e) => {
         // console.log(e.target.parentNode)
         // console.log(starRating1)
         // e.target.parentNode.style = "color: red"
         // e.target.parentNode.previousSibling.style = "color: red"
         if (e.target.parentNode === starRating1) {
           setStarPoint(1);
-          starRating1.style = "color: red"
-          starRating2.style = "color: black"
-          starRating3.style = "color: black"
-          starRating4.style = "color: black"
-          starRating5.style = "color: black"
+          starRating1.style = "color: red";
+          starRating2.style = "color: black";
+          starRating3.style = "color: black";
+          starRating4.style = "color: black";
+          starRating5.style = "color: black";
         } else if (e.target.parentNode === starRating2) {
           setStarPoint(2);
-          starRating1.style = "color: red"
-          starRating2.style = "color: red"
-          starRating3.style = "color: black"
-          starRating4.style = "color: black"
-          starRating5.style = "color: black"
+          starRating1.style = "color: red";
+          starRating2.style = "color: red";
+          starRating3.style = "color: black";
+          starRating4.style = "color: black";
+          starRating5.style = "color: black";
         } else if (e.target.parentNode === starRating3) {
           setStarPoint(3);
-          starRating1.style = "color: red"
-          starRating2.style = "color: red"
-          starRating3.style = "color: red"
-          starRating4.style = "color: black"
-          starRating5.style = "color: black"
+          starRating1.style = "color: red";
+          starRating2.style = "color: red";
+          starRating3.style = "color: red";
+          starRating4.style = "color: black";
+          starRating5.style = "color: black";
         } else if (e.target.parentNode === starRating4) {
           setStarPoint(4);
-          starRating1.style = "color: red"
-          starRating2.style = "color: red"
-          starRating3.style = "color: red"
-          starRating4.style = "color: red"
-          starRating5.style = "color: black"
+          starRating1.style = "color: red";
+          starRating2.style = "color: red";
+          starRating3.style = "color: red";
+          starRating4.style = "color: red";
+          starRating5.style = "color: black";
         } else if (e.target.parentNode === starRating5) {
           setStarPoint(5);
-          starRating1.style = "color: red"
-          starRating2.style = "color: red"
-          starRating3.style = "color: red"
-          starRating4.style = "color: red"
-          starRating5.style = "color: red"
+          starRating1.style = "color: red";
+          starRating2.style = "color: red";
+          starRating3.style = "color: red";
+          starRating4.style = "color: red";
+          starRating5.style = "color: red";
         }
+      });
+    });
+    if (memberReview) {
+      // console.log(memberReview);
 
-      })
-    })
-
+      if (memberReview.rating === 1) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: black";
+        starRating3.style = "color: black";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 2) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: black";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 3) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: red";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 4) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: red";
+        starRating4.style = "color: red";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 5) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: red";
+        starRating4.style = "color: red";
+        starRating5.style = "color: red";
+      } else if (memberReview.rating === 0) {
+        starRating1.style = "color: black";
+        starRating2.style = "color: black";
+        starRating3.style = "color: black";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      }
+    }
   });
+
+  useEffect(() => {
+    const starRating = document.querySelectorAll(".star-rating");
+    const starRating1 = document.querySelector(".star-rating1");
+    const starRating2 = document.querySelector(".star-rating2");
+    const starRating3 = document.querySelector(".star-rating3");
+    const starRating4 = document.querySelector(".star-rating4");
+    const starRating5 = document.querySelector(".star-rating5");
+
+    if (memberReview) {
+      console.log(memberReview);
+
+      if (memberReview.rating === 1) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: black";
+        starRating3.style = "color: black";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 2) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: black";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 3) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: red";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 4) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: red";
+        starRating4.style = "color: red";
+        starRating5.style = "color: black";
+      } else if (memberReview.rating === 5) {
+        starRating1.style = "color: red";
+        starRating2.style = "color: red";
+        starRating3.style = "color: red";
+        starRating4.style = "color: red";
+        starRating5.style = "color: red";
+      } else if (memberReview.rating === 0) {
+        starRating1.style = "color: black";
+        starRating2.style = "color: black";
+        starRating3.style = "color: black";
+        starRating4.style = "color: black";
+        starRating5.style = "color: black";
+      }
+    }
+  }, [status]);
 
   return (
     <>
@@ -153,12 +332,7 @@ function Content() {
               <div className="estimate-star">
                 <div className="star-images">
                   <div className="star-images-container" data-select="content-rating-stars">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="star-rating star-rating1"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="star-rating star-rating1">
                       <path
                         fill="currentColor"
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
@@ -170,34 +344,19 @@ function Content() {
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
                       ></path>
                     </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="star-rating star-rating3"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="star-rating star-rating3">
                       <path
                         fill="currentColor"
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
                       ></path>
                     </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="star-rating star-rating4"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="star-rating star-rating4">
                       <path
                         fill="currentColor"
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
                       ></path>
                     </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="star-rating star-rating5"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="star-rating star-rating5">
                       <path
                         fill="currentColor"
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
@@ -282,21 +441,13 @@ function Content() {
               </div>
               <div className="estimate-acting">
                 <button className="acting-bookmark" type="button">
-                  {/* <svg
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
                     style={{ width: "48", height: "48" }}
                     fill="none"
-                    viewBox="0 0 48 48"
+                    viewBox="0 0 24 24"
                     className="bookmark-btn"
                   >
-                    <path
-                      fill="currentColor"
-                      fillRule="evenodd"
-                      d="M24 4.8a2 2 0 0 0-2 2V22H6.8a2 2 0 1 0 0 4H22v15.2a2 2 0 1 0 4 0V26h15.2a2 2 0 0 0 0-4H26V6.8a2 2 0 0 0-2-2"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg> */}
-                  <svg xmlns="http://www.w3.org/2000/svg" style={{ width: "48", height: "48" }} fill="none" viewBox="0 0 24 24" className="bookmark-btn">
                     <rect width="4" height="11" x="2" y="10" fill="currentColor" rx="0.75"></rect>
                     <path
                       fill="currentColor"
@@ -325,7 +476,7 @@ function Content() {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  코멘트
+                  {memberReview ? "코멘트 수정" : "코멘트"}
                   <div className="comment-container">
                     <div className="comment-write">
                       <div className="comment-modify">
@@ -373,18 +524,6 @@ function Content() {
                     </div>
                   </div>
                 </button>
-                {/* <button className="acting-watch" type="button">
-                  <svg xmlns="http://www.w3.org/2000/svg" style={{ width: "40", height: "40" }} fill="none" viewBox="0 0 24 24">
-                    <path
-                      fill="currentColor"
-                      fillRule="evenodd"
-                      d="M23.77 11.634C22.775 10.131 18.616 4.5 12 4.5S1.224 10.13.23 11.634a.655.655 0 0 0 0 .732C1.225 13.869 5.384 19.5 12 19.5s10.776-5.63 11.77-7.134a.655.655 0 0 0 0-.732M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12"
-                      clipRule="evenodd"
-                    ></path>
-                    <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
-                  </svg>
-                  보는 중
-                </button> */}
                 <button className="acting-add-none" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" style={{ width: "40", height: "40" }} fill="none" viewBox="0 0 24 24">
                     <path
@@ -466,6 +605,7 @@ function Content() {
               </div>
             </section>
             <section className="content-summary">
+              {memberReview && <div className="my-review">{memberReview?.reviewContent}</div>}
               <p className="summary-text">{movieDetail?.overview}</p>
             </section>
           </div>
