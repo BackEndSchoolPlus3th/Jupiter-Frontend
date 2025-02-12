@@ -1,4 +1,4 @@
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -11,32 +11,32 @@ import LoginPage from '../modals/LoginModal';
 function Header() {
     const [inputSearchValue, setInputSearchValue] = useState(''); // 상태 선언
     const [inputValue, setInputValue] = useState(''); // 상태 선언
-    const [searchResults,setSearchResults] = useState('');
-    const [searchTerm,setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     console.log('🚀 ~ isLoggedIn', `${API_BACKEND_URL}`);
     // ⭐ 새로고침 시 쿠키를 가져와 상태 유지
-        useEffect(() => {
-            const checkCookie = async () => {
-                try {
-                    const res = await axios.get(`${API_BACKEND_URL}/api/v1/auth/check`, {
+    useEffect(() => {
+        const checkCookie = async () => {
+            try {
+                const res = await axios.get(`${API_BACKEND_URL}/api/v1/auth/check`, {
                     withCredentials: true  // 쿠키 포함
-                    });
-                    if(res.data ==="쿠키가 없습니다.") {
-                        console.log('비로그인 상태');
-                        setIsLoggedIn(false);
-                    }else{
-                        setIsLoggedIn(true);
-                        console.log('로그인 성공, 쿠키 확인:', res.data);
-                    }
-                } catch (err) {
-                    console.log('쿠키 없음');
+                });
+                if (res.data === "쿠키가 없습니다.") {
+                    console.log('비로그인 상태');
                     setIsLoggedIn(false);
+                } else {
+                    setIsLoggedIn(true);
+                    console.log('로그인 성공, 쿠키 확인:', res.data);
                 }
-            };
-            checkCookie();
-        }, []);
+            } catch (err) {
+                console.log('쿠키 없음');
+                setIsLoggedIn(false);
+            }
+        };
+        checkCookie();
+    }, []);
 
     const navigate = useNavigate();
     // 입력값 변경 처리 함수
@@ -67,8 +67,8 @@ function Header() {
     // 🔥 로그아웃 함수 (쿠키 삭제 후 새로고침)
     const handleLogout = async () => {
         try {
-            await axios.get(`${API_BACKEND_URL}/api/v1/member/logout`,{
-              withCredentials: true  // 요청에 쿠키 포함
+            await axios.get(`${API_BACKEND_URL}/api/v1/member/logout`, {
+                withCredentials: true  // 요청에 쿠키 포함
             }); // 로그아웃 요청
             setIsLoggedIn(false);
             Cookies.remove("accessToken");  // 쿠키 삭제
@@ -80,11 +80,11 @@ function Header() {
         }
     };
 
-      const handleKeyPress = (e) => {
+    const handleKeyPress = (e) => {
         if (e.key === 'Enter' && inputSearchValue.trim()) {
-          navigate(`/searchResult?word=${encodeURIComponent(inputSearchValue)}`);
+            navigate(`/searchResult?word=${encodeURIComponent(inputSearchValue)}`);
         }
-      };
+    };
 
     return (
         <header className="header">
@@ -107,23 +107,21 @@ function Header() {
                                             name="word"
                                             value={inputSearchValue}
                                             onChange={handleSearchChange}
-                                            onKeyDown={handleKeyPress}                                
+                                            onKeyDown={handleKeyPress}
                                         />
                                     </label>
                                 </form>
                             </div>
                         </li>
-                        <li className="rate nav-li">
-                            <div className="dropdown dropdown-bottom dropdown-end">
-                              <div tabIndex={0} role="button" className="text-bold text-primary member-list">계정 변경</div>
-                              <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box absolute left-0 z-[1] w-52 shadow">
-                                <li><a>김공포</a></li>
-                                <li><a>이가족</a></li>
-                                <li><a>최모험</a></li>
-                              </ul>
-                            </div>
-                        </li>
                         <li className="myPage nav-li">
+                            {/* <div className="dropdown dropdown-bottom dropdown-end">
+                                <div tabIndex={0} role="button" className="text-bold text-primary member-list">계정 변경</div>
+                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box absolute left-0 z-[1] w-52 shadow">
+                                    <li><a>김공포</a></li>
+                                    <li><a>이가족</a></li>
+                                    <li><a>최모험</a></li>
+                                </ul>
+                            </div> */}
                             {/* 🔥 로그인 상태에 따라 버튼 변경 */}
                             {isLoggedIn ? (
                                 <button onClick={handleLogout} className="logout-button btn">로그아웃</button>
