@@ -4,12 +4,9 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { API_BACKEND_URL } from "../../config";
 import Cookies from "js-cookie";
-
+import "../../index.css";
 import '../../styles/Header.css';
 import LoginPage from '../modals/LoginModal';
-
-// 모든 axios 요청에 쿠키 포함
-// axios.defaults.withCredentials = true;
 
 function Header() {
     const [inputSearchValue, setInputSearchValue] = useState(''); // 상태 선언
@@ -95,9 +92,7 @@ function Header() {
                 <section className="nav">
                     <ul className="nav-list">
                         <li className="logo nav-li"><a className="nav-button" href="/">우주라이크</a></li>
-                        <li className="home nav-li"><a className="nav-button" href="/"><span role="textbox">홈</span></a></li>
-                        <li className="movie nav-li"><a className="nav-button" href="/ko-KR"><span role="textbox">영화</span></a></li>
-                        <li className="book nav-li"><a className="nav-button" href="/ko-KR"><span role="textbox">도서</span></a></li>
+                        <li className="home nav-li"><span role="textbox">당신이 원하는 모든 영화</span></li>
                         <li className="search search-div nav-li">
                             <div className="search-box">
                                 <form>
@@ -106,7 +101,7 @@ function Header() {
                                         {/* <span className="material-icons">search</span> */}
                                         <input
                                             autoComplete="off"
-                                            className="search-input"
+                                            className="input input-bordered input-primary w-full max-w-xs"
                                             placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요."
                                             type="text"
                                             name="word"
@@ -118,13 +113,22 @@ function Header() {
                                 </form>
                             </div>
                         </li>
-                        <li className="rate nav-li"><a className="nav-button" href="/ko-KR"><span role="textbox">평가</span></a></li>
+                        <li className="rate nav-li">
+                            <div className="dropdown dropdown-bottom dropdown-end">
+                              <div tabIndex={0} role="button" className="text-bold text-primary member-list">계정 변경</div>
+                              <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box absolute left-0 z-[1] w-52 shadow">
+                                <li><a>김공포</a></li>
+                                <li><a>이가족</a></li>
+                                <li><a>최모험</a></li>
+                              </ul>
+                            </div>
+                        </li>
                         <li className="myPage nav-li">
                             {/* 🔥 로그인 상태에 따라 버튼 변경 */}
                             {isLoggedIn ? (
-                                <button onClick={handleLogout} className="logout-button">로그아웃</button>
+                                <button onClick={handleLogout} className="logout-button btn">로그아웃</button>
                             ) : (
-                                <button onClick={openModal} className="nav-button">
+                                <button onClick={openModal} className="nav-button btn btn-primary">
                                     <span role="textbox">로그인</span>
                                 </button>
                             )}

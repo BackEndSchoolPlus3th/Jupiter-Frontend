@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './MainPage.css';
+import "../../index.css";
 import { Link } from 'react-router-dom';
 import { API_BACKEND_URL } from "../../config";
 
@@ -8,13 +9,69 @@ import Banner from '../../components/banners/Banner';
 // 모든 axios 요청에 쿠키 포함
 // axios.defaults.withCredentials = true;
 
+function Slider({ movies }) {
+    const sliderRef = useRef(null);
+
+    // 자동 슬라이드 기능 추가
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            if (sliderRef.current) {
+                const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+                if (scrollLeft + clientWidth >= scrollWidth - 1) {
+                    // 맨 끝에 도달하면 왼쪽 끝으로 이동
+                    sliderRef.current.scrollTo({ left: 0, behavior: "smooth" });
+                } else {
+                    // 일반적인 슬라이드 이동
+                    scrollRight();
+                }
+            }
+        }, 3000); // 3초마다 자동 슬라이드
+
+        return () => clearInterval(intervalId); // 컴포넌트가 unmount될 때 interval 제거
+    }, []);
+
+    const scrollLeft = () => {
+        if (sliderRef.current) {
+            sliderRef.current.scrollBy({ left: -300, behavior: "smooth" });
+        }
+    };
+
+    const scrollRight = () => {
+        if (sliderRef.current) {
+            sliderRef.current.scrollBy({ left: 300, behavior: "smooth" });
+        }
+    };
+
+    return (
+        <div className="relative w-full">
+            <div
+                ref={sliderRef}
+                className="flex gap-5 overflow-hidden scroll-smooth snap-x snap-mandatory p-4 movie-contents"
+            >
+                {movies.map((movie) => (
+                    <div key={movie.id} className="w-64 flex-shrink-0 snap-center">
+                        <Link to={`/detail/${movie.id}`} className="block">
+                            <img
+                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                alt={movie.title}
+                                className="movie-poster rounded-md shadow-lg transition-transform hover:scale-105"
+                            />
+                        <p className="text-center mt-2 ellipsis movie-text">{movie.title}</p>
+                        </Link>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
 function MovieSection({ title, movies, loading, error }) {
     return (
         <div className="box-recommend">
             <p className="contents-title">{title}</p>
             <div className="contents-box">
                 {loading ? (
-                    <p>로딩 중...</p>
+                    <p className="loading loading-ring loading-lg">로딩 중...</p>
                 ) : error ? (
                     <p>{error}</p>
                 ) : (
@@ -174,92 +231,84 @@ function MainPage() {
     return (
         <div className="contents">
             <div className="contents-div">
-                {/* 인기 영화 섹션 */}
-                <MovieSection title="PopularMovies" movies={popularMovies} loading={loading} error={error} />
-
-                {/* 추천 영화 섹션 */}
-                <MovieSection title="TopRatedMovies" movies={topRatedMovies} loading={loading} error={error} />
-
-                {/* 좋아하는 키워드 영화 섹션 */}
-                <div className="box-recommend">
-                    <p className="contents-title">당신의 취향을 찾아드릴게요!</p>
-                    <div className="contents-box">
-                        {loading ? (
-                            <p>로딩 중...</p>
-                        ) : error ? (
-                            <p>{error}</p>  // 에러 메시지 표시
-                        ) : (
-                            <ul className="contents-ul">
-                                {likeKeywordMovies.map((movie) => (
-                                    <li key={movie.id}>
-                                        <Link to={`/detail/${movie.id}`}>
-                                            <img
-                                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                                alt={movie.title}
-                                                className="movie-poster"
-                                            />
-                                            {movie.title}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
+                <div className="rounded-md py-4">
+                    <img src="../../dist/assets/wyl-banner-DBSqDFSV.jpg"></img>
                 </div>
+{/*                  */}{/* 인기 영화 섹션 */}
+{/*                 <MovieSection title="PopularMovies" movies={popularMovies} loading={loading} error={error} /> */}
 
-                {/* 좋아하는 장르 영화 섹션 */}
-                <div className="box-recommend">
-                    <p className="contents-title">당신이 가장 좋아하는 장르 영화</p>
-                    <div className="contents-box">
-                        {loading ? (
-                            <p>로딩 중...</p>
-                        ) : error ? (
-                            <p>{error}</p>  // 에러 메시지 표시
-                        ) : (
-                            <ul className="contents-ul">
-                                {likeGenreMovies.map((movie) => (
-                                    <li key={movie.id}>
-                                        <Link to={`/detail/${movie.id}`}>
-                                            <img
-                                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                                alt={movie.title}
-                                                className="movie-poster"
-                                            />
-                                            {movie.title}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                </div>
+{/*                  */}{/* 추천 영화 섹션 */}
+{/*                 <MovieSection title="TopRatedMovies" movies={topRatedMovies} loading={loading} error={error} /> */}
 
-                {/* 두 번째로 좋아하는 장르 영화 섹션 */}
-                <div className="box-recommend">
-                    <p className="contents-title">당신이 정말 좋아하는 장르 영화</p>
-                    <div className="contents-box">
-                        {loading ? (
-                            <p>로딩 중...</p>
-                        ) : error ? (
-                            <p>{error}</p>  // 에러 메시지 표시
-                        ) : (
-                            <ul className="contents-ul">
-                                {likeGenreMovies_2nd.map((movie) => (
-                                    <li key={movie.id}>
-                                        <Link to={`/detail/${movie.id}`}>
-                                            <img
-                                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                                alt={movie.title}
-                                                className="movie-poster"
-                                            />
-                                            {movie.title}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                </div>
+               {/* 인기 영화 섹션 */}
+               <div className="box-recommend">
+                   <p className="contents-title">요즘 최고 인기!</p>
+                   <div className="contents-box">
+                       {loading ? (
+                           <p className="loading loading-ring loading-lg">로딩 중...</p>
+                       ) : error ? (
+                           <p>{error}</p>  // 에러 메시지 표시
+                       ) : (
+                           <Slider movies={popularMovies} />
+                       )}
+                   </div>
+               </div>
+
+               {/* 좋아하는 키워드 영화 섹션 */}
+               <div className="box-recommend">
+                   <p className="contents-title">이런 영화 어떠세요?</p>
+                   <div className="contents-box">
+                       {loading ? (
+                           <p className="loading loading-ring loading-lg">로딩 중...</p>
+                       ) : error ? (
+                           <p>{error}</p>  // 에러 메시지 표시
+                       ) : (
+                           <Slider movies={likeKeywordMovies} />
+                       )}
+                   </div>
+               </div>
+
+              {/* 고평가 영화 섹션 */}
+              <div className="box-recommend">
+                  <p className="contents-title">평점이 높은 영화!</p>
+                  <div className="contents-box">
+                      {loading ? (
+                          <p className="loading loading-ring loading-lg">로딩 중...</p>
+                      ) : error ? (
+                          <p>{error}</p>  // 에러 메시지 표시
+                      ) : (
+                          <Slider movies={topRatedMovies} />
+                      )}
+                  </div>
+              </div>
+
+               {/* 좋아하는 장르 영화 섹션 */}
+               <div className="box-recommend">
+                   <p className="contents-title">당신이 좋아하는 장르 영화</p>
+                   <div className="contents-box">
+                       {loading ? (
+                           <p className="loading loading-ring loading-lg">로딩 중...</p>
+                       ) : error ? (
+                           <p>{error}</p>  // 에러 메시지 표시
+                       ) : (
+                           <Slider movies={likeGenreMovies} />
+                       )}
+                   </div>
+               </div>
+
+               {/* 두 번째로 좋아하는 장르 영화 섹션 */}
+               <div className="box-recommend">
+                   <p className="contents-title">당신이 좋아하는 또다른 장르 영화</p>
+                   <div className="contents-box">
+                       {loading ? (
+                           <p className="loading loading-ring loading-lg">로딩 중...</p>
+                       ) : error ? (
+                           <p>{error}</p>  // 에러 메시지 표시
+                       ) : (
+                           <Slider movies={likeGenreMovies_2nd} />
+                       )}
+                   </div>
+               </div>
             </div>
         </div>
     );

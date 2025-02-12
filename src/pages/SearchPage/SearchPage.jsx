@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { API_BACKEND_URL } from "../../config";
 import './SearchPage.css';
+import "../../index.css";
 import axios from 'axios';
 
 function GeneralSearch() {

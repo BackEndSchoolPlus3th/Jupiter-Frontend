@@ -3,7 +3,6 @@
     background-color: white;
     text-align: center; /* 모든 내용을 중앙 정렬 */
     color: #111;
-    font-size: 14px;
     position: relative;
     display: flex;  /* Flexbox 활성화 */
     justify-content: center;  /* 가로 중앙 정렬 */
@@ -23,9 +22,10 @@
   /* 챗봇 버튼 */
 .chatbot-container {
     position: fixed;
-    right: 20px;
-    bottom: 20px;
+    right: 40px;
+    bottom: 30px;
     z-index: 9999;
+    font-family: '42dot sans';
   }
   
   .chatbot-button {
@@ -46,10 +46,12 @@
   .chatbot-button:hover {
     background-color: #0056b3;
   }
-  
+  .chatbot-headdiv {
+      box-shadow: 0 1px #00000014;
+  }
+
  /* 챗봇 창 */
 .chatbot-window {
-  display: none; /* 기본적으로 숨겨짐 */
   position: absolute;
   bottom: 70px;
   right: 0;
@@ -73,10 +75,11 @@
   .chatbot-header {
     display: flex;
     justify-content: space-between;
-    background-color: #007bff;
-    color: white;
+    color: #111;
     padding: 10px;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: '42dot sans';
   }
   
   .close-button {
@@ -103,7 +106,7 @@
     max-width: 70%;
     padding: 10px;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.4;
     word-wrap: break-word;
     margin-bottom: 10px;
@@ -135,7 +138,13 @@
     border-top: 1px solid #ddd;
     font-size: 14px;
   }
-  
+
+  .chatbot-text {
+    font-family: '42dot Sans';
+    font-size: 14px;
+    text-align: left;
+  }
+
 /* 메시지 전송 버튼 */
 .send-button {
     background-color: #007bff;
