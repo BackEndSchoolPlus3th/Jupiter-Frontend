@@ -2056,3 +2056,63 @@ textarea {
   /* margin: 0; */
   outline: none;
 }
+
+.my-comment-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.my-comment-h4 {
+  color: #7e7e7e;
+  margin-bottom: 10px;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 18px;
+}
+
+.my-comment-container {
+  border-radius: 6px;
+  border-width: 1px;
+  border-style: solid;
+  background-color: #fff;
+    border-color: #e0e0e0;
+    overflow: hidden;
+}
+
+.my-comment-wrap {
+  margin: 0 20px;
+}
+
+.my-comment-inner-section {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.my-comment {
+  align-items: center;
+  display: flex
+;
+}
+
+.my-comment-a {
+  text-align: left;
+  flex: 1;
+  margin: 0 16px;
+  word-break: break-all;
+  display: block;
+  font-size: 15px;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0;
+  line-height: 20px;
+}
+
+.my-comment-text-box {
+  max-height: 60px;
+  word-break: break-all;
+  margin: 0;
+  overflow: hidden;
+}
+
+.my-comment-text {
+  white-space: pre-wrap;
+}
