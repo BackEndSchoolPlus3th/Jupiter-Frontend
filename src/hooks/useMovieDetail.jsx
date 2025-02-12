@@ -6,7 +6,7 @@ const useMovieDetail = (id) => {
   const [movieDetail, setMovieDetail] = useState(null);
   const [videoKey, setVideoKey] = useState(null);
 
-  console.log('detail : ', `${API_BACKEND_URL}`);
+  // console.log('detail : ', `${API_BACKEND_URL}`);
 
   useEffect(() => {
     const fetchMovies = async () => {

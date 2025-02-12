@@ -7,30 +7,32 @@ function Review() {
   const [movieReview, setMovieReview] = useState([]);
   const { id: movieId } = useParams();
 
+  const fetchReviews = async () => {
+    if (!movieId) return; // movieId가 없으면 실행 안 함
+
+    try {
+      const reviewResponse = await axios.get(`${API_BACKEND_URL}/api/v1/movie/reviews/${movieId}`);
+      setMovieReview(reviewResponse.data); // 데이터를 리스트로 저장
+      console.log(reviewResponse.data);
+    } catch (error) {
+      console.error("Error fetching review data:", error);
+    }
+
+    // if (reviewResponse.ok) {
+    //   const reviewerName = await axios.get(`${API_BACKEND_URL}/api/v1/movie/reviewer/${movieId}`);
+    // }
+  };
+
   useEffect(() => {
-    const fetchReviews = async () => {
-      if (!movieId) return; // movieId가 없으면 실행 안 함
-
-      try {
-        const reviewResponse = await axios.get(`${API_BACKEND_URL}/api/v1/movie/reviews/${movieId}`);
-        setMovieReview(reviewResponse.data); // 데이터를 리스트로 저장
-        console.log(reviewResponse.data);
-      } catch (error) {
-        console.error("Error fetching review data:", error);
-      }
-    };
-
     fetchReviews();
-  }, [movieId]); // movieId 변경될 때마다 실행
+  }, []);
 
   return (
     <section className="review-wrap">
       <header className="review-container">
         <h2 className="review-header">리뷰</h2>
         <div className="review-more-container">
-          <div className="review-more-wrap">
-            {/* <a href="" className="review-more">더보기</a> */}
-          </div>
+          <div className="review-more-wrap">{/* <a href="" className="review-more">더보기</a> */}</div>
         </div>
       </header>
       <ul className="review-ul">
@@ -46,7 +48,7 @@ function Review() {
                         <div className="profile"></div>
                       </div>
                       <div className="profile-name">
-                        닉네임
+                        {review.userId}
                         <span></span>
                       </div>
                     </a>
@@ -58,7 +60,7 @@ function Review() {
                         d="M11.303 2.613a.75.75 0 0 1 1.345 0l2.722 5.516a.25.25 0 0 0 .188.137l6.088.885a.75.75 0 0 1 .416 1.279l-4.405 4.294a.25.25 0 0 0-.072.221l1.04 6.063a.75.75 0 0 1-1.089.79l-5.445-2.862a.25.25 0 0 0-.232 0L6.414 21.8a.75.75 0 0 1-1.089-.79l1.04-6.064a.25.25 0 0 0-.072-.221L1.888 10.43a.75.75 0 0 1 .416-1.28l6.088-.884a.25.25 0 0 0 .188-.137z"
                       ></path>
                     </svg>
-                    <span>{(review.rating)?.toFixed(1)}</span>
+                    <span>{review.rating?.toFixed(1)}</span>
                   </div>
                 </div>
                 <div className="review-content-wrap">

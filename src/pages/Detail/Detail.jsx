@@ -11,6 +11,7 @@ import Footer from "../../components/layout/Footer";
 import "./detail.css";
 
 function Detail() {
+
   return (
     <div className="root-div">
       {/* <Header /> */}
