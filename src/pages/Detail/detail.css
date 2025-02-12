@@ -150,6 +150,7 @@ textarea {
     min-height: calc(100vh - var(--main-top-space-sm));
     flex-direction: column;
     display: flex;
+    background: #fefefe;
   }
 }
 
