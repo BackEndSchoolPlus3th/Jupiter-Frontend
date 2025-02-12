@@ -21,6 +21,7 @@
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.5",
     "sockjs-client": "^1.6.1",
+    "tailwind": "^4.0.0",
     "tailwindcss": "^4.0.6"
   },
   "devDependencies": {

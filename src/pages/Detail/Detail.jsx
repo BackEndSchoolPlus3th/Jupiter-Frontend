@@ -13,29 +13,7 @@ import "./detail.css";
 function Detail() {
 
   return (
-    <div className="root-div">
-      {/* <Header /> */}
-      <section className="section-1">
-        <div>
-          <div className="base-div">
-            <div className="top-container">
-              <div>
-                <Banner />
-                <Content />
-              </div>
-            </div>
-            <section className="content-credits-wrap">
-              <Credits />
-              <Review />
-              <Collection />
-            </section>
-          </div>
-          <Comment />
-          {/* <ReviewModal /> */}
-        </div>
-      </section>
-      {/* <Footer /> */}
-    </div>
+    <Content />
   );
 }
 
