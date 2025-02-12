@@ -680,7 +680,7 @@ function Content() {
                             <div className="review-modal-comment">
                               <div className="review-modal-comment-area">
                                 <textarea
-                                  className="review-modal-textarea"
+                                  className="review-modal-textarea box-white"
                                   placeholder="이 작품에 대한 생각을 자유롭게 표현해주세요."
                                   maxLength="10000"
                                   value={comment}

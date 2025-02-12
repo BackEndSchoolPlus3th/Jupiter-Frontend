@@ -1,5 +1,5 @@
 html {
-  font-family: Pretendard, Apple SD Gothic Neo, Nanum Gothic, Malgun Gothic, sans-serif;
+  font-family: 42dot sans, Pretendard, Apple SD Gothic Neo, Nanum Gothic, Malgun Gothic, sans-serif;
 }
 
 body {
@@ -446,13 +446,13 @@ textarea {
   text-align: center;
   cursor: pointer;
   position: relative;
+  display: flex;
 }
 
 .star-images-container {
-  margin-left: -80px;
   height: 44px;
   vertical-align: top;
-  display: inline-block;
+  display: flex;
   position: relative;
 }
 
