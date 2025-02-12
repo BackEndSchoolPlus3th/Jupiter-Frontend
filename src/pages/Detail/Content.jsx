@@ -159,7 +159,7 @@ function Content() {
         const userEmail = user.data.email;
         const movieReviewResponse = await axios.get(`${API_BACKEND_URL}/api/v1/movie/review/${userEmail}/${id}`);
         setMemberReview(movieReviewResponse.data);
-        console.log("fetchMovieReview");
+        console.log(movieReviewResponse.data);
       } catch (error) {
         console.error("Error fetching review data:", error);
       }
@@ -516,7 +516,7 @@ function Content() {
                                   clipRule="evenodd"
                                 ></path>
                               </svg>
-                              {memberReview ? "코멘트 수정" : "코멘트"}
+                              {memberReview ? "리뷰 수정" : "리뷰 작성"}
                               <div className="comment-container">
                                 <div className="comment-write">
                                   <div className="comment-modify">
@@ -645,7 +645,23 @@ function Content() {
                           </div>
                         </section>
                         <section className="content-summary">
-                          {memberReview && <div className="my-review">{memberReview?.reviewContent}</div>}
+                          {memberReview &&
+                            <section class="my-comment-section">
+                            <h4 class="my-comment-h4">내가 쓴 리뷰</h4>
+                            <div class="my-comment-container">
+                              <div class="my-comment-wrap">
+                                <section class="my-comment-inner-section">
+                                  <div class="my-comment">
+                                    <a class="my-comment-a" href=""
+                                      ><div class="my-comment-text-box">
+                                          <div class="my-comment-text">{memberReview?.reviewContent}</div>
+                                      </div>
+                                    </a>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </section>}
                           <p className="summary-text">{movieDetail?.overview}</p>
                         </section>
                       </div>
@@ -727,7 +743,7 @@ function Content() {
                                     <div className="profile"></div>
                                   </div>
                                   <div className="profile-name">
-                                    {review.userId}
+                                    {review.userName}
                                     <span></span>
                                   </div>
                                 </a>
