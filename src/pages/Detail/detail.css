@@ -212,7 +212,7 @@ textarea {
 }
 
 .star-rating {
-  width: 44px;
+  width: 15%;
   height: 44px;
 }
 
@@ -447,6 +447,7 @@ textarea {
 }
 
 .star-images-container {
+  margin-left: -80px;
   height: 44px;
   vertical-align: top;
   display: inline-block;

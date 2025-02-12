@@ -3,12 +3,13 @@
     display: flex;
     flex-direction: column;
     overflow: auto;
+    padding:0 50px;
 }
 
 /* 콘텐츠를 담고 있는 영역 */
 .contents-div {
     width: 100%;
-    padding: 0 0 30px 30px;
+    padding: 0;
     box-sizing: border-box;
     overflow: auto;
 }
@@ -22,6 +23,19 @@
     line-height: 30px;
     position: relative;
     margin-bottom: 15px;
+    margin-top: 30px;
+    font-family: '42dot Sans';
+}
+.movie-contents {
+    gap:20px;
+}
+.movie-text {
+    font-family: '42dot Sans';
+    font-size: 14px;
+    width:200px;
+    white-space: nowrap;        /* 텍스트를 한 줄로 표시 */
+    overflow: hidden;           /* 텍스트가 넘칠 경우 숨김 처리 */
+    text-overflow:ellipsis;
 }
 
 /* 영화 목록을 감싸는 박스 스타일 */

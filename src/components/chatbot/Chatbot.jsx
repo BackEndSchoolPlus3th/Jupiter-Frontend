@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Client } from '@stomp/stompjs';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 import SockJS from 'sockjs-client';
 import axios from 'axios';
 import './Chatbot.css';
@@ -143,38 +143,49 @@ function Chatbot() {
     };
 
     return (
-        <div className="chatbot-container">
-            <button className="chatbot-button" onClick={toggleChatbot}>
+        <div className="chatbot-container fixed bottom-5 right-5 z-50">
+            {/* 챗봇 버튼 */}
+            <button className="btn btn-primary btn-circle shadow-lg" onClick={toggleChatbot}>
                 💬
             </button>
 
-            <div className={`chatbot-window ${isChatbotOpen ? 'open' : ''}`}>
-                <div className="chatbot-header">
-                    <span>Chatbot</span>
-                    <button className="close-button" onClick={closeChatbot}>
+            {/* 챗봇 창 */}
+            <div className={`chatbot-window card bg-base-100 shadow-lg transition-all duration-300 ${isChatbotOpen ? 'opacity-100 scale-100' : 'hidden opacity-0 scale-95'} fixed bottom-16 right-5 w-80`}>
+                {/* 헤더 */}
+                <div className="card-header chatbot-headdiv flex justify-between items-center p-3 rounded-t-lg">
+                    <span className="chatbot-header text-white text-bold">영화 추천 도우미</span>
+                    <button className="chatbot-header btn btn-sm btn-ghost text-white" onClick={closeChatbot}>
                         ×
                     </button>
                 </div>
-                <div className="chatbot-content" ref={chatbotContentRef}>
+
+                {/* 채팅 내용 */}
+                <div className="chatbot-content p-4 h-64 overflow-y-auto space-y-3" ref={chatbotContentRef}>
                     {messages.map((msg, index) => (
-                        <div key={index} className={`message ${msg.sender}`}>
-                            {formatMessage(msg.message)}  {/* HTML로 변환된 메시지 출력 */}
+                        <div key={index} className={`chat ${msg.sender === 'bot' ? 'chat-start' : 'chat-end'} chatbot-text`}>
+                            <div className={`chat-bubble ${msg.sender === 'bot' ? 'chat-bubble' : 'chat-bubble-primary'} chatbot-text`}>
+                                {formatMessage(msg.message)}
+                            </div>
                         </div>
                     ))}
                 </div>
-                <input
-                    type="text"
-                    className="chatbot-input"
-                    ref={chatbotInputRef}
-                    autoComplete="off"
-                    placeholder="메시지를 입력하세요..."
-                    onKeyPress={handleKeyPress}
-                    value={userMessage}  // state로 관리하는 값
-                    onChange={(e) => setUserMessage(e.target.value)}  // onChange로 상태 업데이트
-                />
-                <button className="send-button" onClick={sendMessage}>
-                    전송
-                </button>
+
+                {/* 입력창 */}
+                <div className="flex gap-2 p-3">
+                    <input
+                        type="text"
+                        className="chatbot-input input input-bordered input-primary flex-1"
+                        ref={chatbotInputRef}
+                        autoComplete="off"
+                        placeholder="메시지를 입력하세요..."
+                        onKeyPress={handleKeyPress}
+                        value={userMessage}
+                        onChange={(e) => setUserMessage(e.target.value)}
+                    />
+                    <button className="btn btn-primary" onClick={sendMessage}>
+                        전송
+                    </button>
+                </div>
             </div>
         </div>
     );
