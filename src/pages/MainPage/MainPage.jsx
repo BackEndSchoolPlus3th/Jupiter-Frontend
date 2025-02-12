@@ -5,7 +5,6 @@ import "../../index.css";
 import { Link } from 'react-router-dom';
 import { API_BACKEND_URL } from "../../config";
 
-import Banner from '../../components/banners/Banner';
 // 모든 axios 요청에 쿠키 포함
 // axios.defaults.withCredentials = true;
 

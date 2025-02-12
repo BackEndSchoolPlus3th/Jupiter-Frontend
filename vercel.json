@@ -1,9 +1,5 @@
 {
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/src/main.jsx"
-      }
-    ]
-  }
-  
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
