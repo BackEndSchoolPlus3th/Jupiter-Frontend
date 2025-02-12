@@ -4,8 +4,8 @@ import './MainPage.css';
 import "../../index.css";
 import { Link } from 'react-router-dom';
 import { API_BACKEND_URL } from "../../config";
+import banner from '../../assets/banner.png'; 
 
-import Banner from '../../components/banners/Banner';
 // 모든 axios 요청에 쿠키 포함
 // axios.defaults.withCredentials = true;
 
@@ -232,7 +232,7 @@ function MainPage() {
         <div className="contents">
             <div className="contents-div">
                 <div className="rounded-md py-4">
-                    <img src="../../dist/assets/wyl-banner-DBSqDFSV.jpg"></img>
+                    <img src={banner} alt="banner"></img>
                 </div>
 {/*                  */}{/* 인기 영화 섹션 */}
 {/*                 <MovieSection title="PopularMovies" movies={popularMovies} loading={loading} error={error} /> */}

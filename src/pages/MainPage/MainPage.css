@@ -4,6 +4,7 @@
     flex-direction: column;
     overflow: auto;
     padding:0 50px;
+    background: #fefefe;
 }
 
 /* 콘텐츠를 담고 있는 영역 */
@@ -31,6 +32,7 @@
 }
 .movie-text {
     font-family: '42dot Sans';
+    color: #010101;
     font-size: 14px;
     width:200px;
     white-space: nowrap;        /* 텍스트를 한 줄로 표시 */

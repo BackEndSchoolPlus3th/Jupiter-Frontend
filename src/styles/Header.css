@@ -179,6 +179,7 @@ form {
     display: flex;
     justify-content: end;
     z-index: 999;
+    padding: 0 20px;
 }
 
 span {
@@ -195,4 +196,9 @@ a {
 
 .search-icon {
     margin-right: 10px;
+}
+
+.box-white {
+    background: #fefefe;
+    color: #010101;
 }
