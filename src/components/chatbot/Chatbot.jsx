@@ -174,7 +174,7 @@ function Chatbot() {
                 <div className="flex gap-2 p-3">
                     <input
                         type="text"
-                        className="chatbot-input input input-bordered input-primary flex-1"
+                        className="chatbot-input input input-bordered input-primary flex-1 box-white"
                         ref={chatbotInputRef}
                         autoComplete="off"
                         placeholder="메시지를 입력하세요..."

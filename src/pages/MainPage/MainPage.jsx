@@ -230,9 +230,9 @@ function MainPage() {
     return (
         <div className="contents">
             <div className="contents-div">
-                {/* <div className="rounded-md py-4">
+                <div className="rounded-md py-4">
                     <img src="../../dist/assets/wyl-banner-DBSqDFSV.jpg"></img>
-                </div> */}
+                </div>
 {/*                  */}{/* 인기 영화 섹션 */}
 {/*                 <MovieSection title="PopularMovies" movies={popularMovies} loading={loading} error={error} /> */}
 

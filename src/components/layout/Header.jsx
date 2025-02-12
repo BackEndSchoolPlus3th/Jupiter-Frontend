@@ -88,7 +88,7 @@ function Header() {
 
     return (
         <header className="header">
-            <nav>
+            <nav className="shadow-md">
                 <section className="nav">
                     <ul className="nav-list">
                         <li className="logo nav-li"><a className="nav-button" href="/">우주라이크</a></li>
@@ -101,7 +101,7 @@ function Header() {
                                         {/* <span className="material-icons">search</span> */}
                                         <input
                                             autoComplete="off"
-                                            className="input input-bordered input-primary w-full max-w-xs"
+                                            className="input input-bordered input-primary w-full max-w-xs box-white"
                                             placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요."
                                             type="text"
                                             name="word"

@@ -196,3 +196,8 @@ a {
 .search-icon {
     margin-right: 10px;
 }
+
+.box-white {
+    background: #fefefe;
+    color: #010101;
+}

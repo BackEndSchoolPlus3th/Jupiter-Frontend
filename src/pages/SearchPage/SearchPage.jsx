@@ -68,41 +68,60 @@ function GeneralSearch() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="wrap">
-      <div className="main_text0" id="link_main_text0">
-        <div style={{ marginLeft: '45px', width: '95%', fontSize: '20px', color: 'black',display: 'flex',justifyContent: 'space-between' }}>
-          <div>영화</div>
-        <div>
-          <select onChange={handleSelectChange}>
-            <option value="latest">최신순</option>
-            <option value="popular">인기순</option>
-          </select></div> 
-        </div>
-        <ul className="icons">
-          {data.map((item) => (          
-            <li key={item.id} className="icon">
-              <Link to={`/detail/${item.id}`} key={item.id}>
-              <div className="icon_img">
-            {item.poster_path==null ? <div></div> : 
-              <img
-                src={`http://image.tmdb.org/t/p/w185${item.poster_path}`}
-                alt={item.title}
-              />}
-              </div>
-              <div className="contents1_bold">
-                {item.title.length > 14
-                  ? item.title.substring(0, 13).concat('..')
-                  : item.title}
-              </div>
-              <div className="contents2">
-                {item.release_date?.substring(0, 4)} ・{' '}
-                {item.original_country}
-              </div></Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+       <div className="wrap p-6 s-contents box-white h-100">
+         {/* 제목 & 필터 */}
+         <div
+           className="flex justify-between items-center px-4 mb-6 search-contents-box1 relative z-10 box-white"
+         >
+           <p className="contents-title">검색 결과</p>
+           <select
+             onChange={handleSelectChange}
+             className="select select-primary w-36 box-white mr-5"
+           >
+             <option value="latest">최신순</option>
+             <option value="popular">인기순</option>
+           </select>
+         </div>
+
+         {/* 영화 리스트 */}
+         <div className="main_text0 card p-4 contents-div relative z-0 box-white">
+           <div className="flex justify-start items-center px-4 mb-4 search-contents-box2">
+             <h2 className="text-xl font-bold text-black">영화</h2>
+           </div>
+
+           <ul className="grid grid-cols-6 gap-4 box-white">
+             {data.map((item) => (
+               <li key={item.id} className="shadow-md w-48">
+                 <Link to={`/detail/${item.id}`} className="block p-3">
+                   {/* 포스터 */}
+                   <div className="card rounded-lg overflow-hidden box-white w-48 shadow-lg">
+                     {item.poster_path ? (
+                       <img
+                         src={`http://image.tmdb.org/t/p/w185${item.poster_path}`}
+                         alt={item.title}
+                         className="w-full h-40 object-cover"
+                       />
+                     ) : (
+                       <div className="w-full h-40 flex items-center justify-center bg-gray-300">
+                         <span className="text-gray-600">이미지 없음</span>
+                       </div>
+                     )}
+                   </div>
+
+                   {/* 제목 */}
+                   <h3 className="text-sm font-semibold mt-2 truncate">{item.title}</h3>
+
+                   {/* 개봉 연도 & 국가 */}
+                   <p className="text-xs text-gray-500">
+                     {item.release_date?.substring(0, 4)} ・ {item.original_country || "N/A"}
+                   </p>
+                 </Link>
+               </li>
+             ))}
+           </ul>
+         </div>
+       </div>
+
   );
 }
 

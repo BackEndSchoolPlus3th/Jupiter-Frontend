@@ -32,6 +32,7 @@
 }
 .movie-text {
     font-family: '42dot Sans';
+    color: #010101;
     font-size: 14px;
     width:200px;
     white-space: nowrap;        /* 텍스트를 한 줄로 표시 */

@@ -151,6 +151,7 @@ textarea {
     flex-direction: column;
     display: flex;
     background: #fefefe;
+    color: #010101;
   }
 }
 
